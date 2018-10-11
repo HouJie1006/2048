@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CCF5F7FA"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/tv_custom_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:fitsSystemWindows="true"
+        tools:text="You Win!"
+        android:textColor="#F54EA2"
+        android:textSize="64sp" />
+
+    <TextView
+        android:id="@+id/tv_final_score"
+        android:layout_width="164dp"
+        android:layout_height="164dp"
+        android:layout_below="@+id/tv_custom_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_button"
+        android:gravity="center"
+        android:textColor="#334252"
+        app:layout_textSizePercent="7%h"
+        tools:text="221930" />
+
+    <TextView
+        android:id="@+id/tv_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_final_score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_button"
+        android:gravity="center"
+        android:text="@string/tv_share"
+        android:textColor="#334252"
+        android:textStyle="bold"
+        app:layout_heightPercent="10%"
+        app:layout_textSizePercent="3%h"
+        app:layout_widthPercent="68%" />
+
+    <TextView
+        android:id="@+id/tv_go_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_button"
+        android:gravity="center"
+        android:text="@string/tv_go_on"
+        android:textColor="#334252"
+        android:textStyle="bold"
+        app:layout_heightPercent="10%"
+        app:layout_textSizePercent="3%h"
+        app:layout_widthPercent="68%" />
+
+</com.zhy.android.percent.support.PercentRelativeLayout>
