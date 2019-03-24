@@ -15,10 +15,12 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.example.fairhand.a2048.R;
 
 /**
- * Created by FairHand on 2018/10/10.<br />
+ * @author FairHand
+ * @date 2018/10/10
  * 自定义更新Dialog
  */
 public class CustomUpdateDialog extends Dialog {
+    
     
     private static String vision;
     private static String size;

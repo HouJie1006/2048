@@ -67,7 +67,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * @author FairHand
+ */
 public class MainActivity extends AppCompatActivity {
+    
+    public static final String KEY_CHEAT = "开挂";
+    public static final int KEY_MATCH_SCORE = 3;
     
     private TextView currentScores;
     private TextView bestScores;
@@ -110,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // 申请获取权限
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                ActivityCompat.requestPermissions(MainActivity.this, new String[] {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.REQUEST_INSTALL_PACKAGES,
                         Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -140,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
             actionBar.hide();
         }
         // 动态设置状态栏字体颜色
-        if (isLightColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))) {// 亮色，设置字体黑色
+        if (isLightColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))) {
+            // 亮色，设置字体黑色
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
@@ -158,10 +165,13 @@ public class MainActivity extends AppCompatActivity {
         mGestureOverlayView = findViewById(R.id.gesture_overlay_view);
         cheatStar = findViewById(R.id.iv_show_cheat);
         
-        if (Config.CurrentGameMode == 0) {// 进入经典模式
-            bestScores.setText(String.valueOf(Config.BestScore));// 读取到历史最高分
+        // 进入经典模式
+        if (Config.CurrentGameMode == 0) {
+            // 读取到历史最高分
+            bestScores.setText(String.valueOf(Config.BestScore));
             bestScoresRank.setText(getString(R.string.best_score_rank, Config.GIRDColumnCount));
-        } else {// 进入无限模式
+        } else {
+            // 进入无限模式
             enterInfiniteMode();
         }
         setTextStyle(titleDescribe);
@@ -198,12 +208,17 @@ public class MainActivity extends AppCompatActivity {
         GameView guide3 = findViewById(R.id.game_view);
         
         NewbieGuide.with(this)
-                .setLabel("guide")// 设置引导页的标签
-                .addGuidePage(GuidePage.newInstance()// 添加一页引导页
-                                      .addHighLight(guide1, HighLight.Shape.ROUND_RECTANGLE, 16)// 高亮区域
-                                      .setEverywhereCancelable(false)// 禁止点击任意地方取消
+                // 设置引导页的标签
+                .setLabel("guide")
+                // 添加一页引导页
+                .addGuidePage(GuidePage.newInstance()
+                                      // 高亮区域
+                                      .addHighLight(guide1, HighLight.Shape.ROUND_RECTANGLE, 16)
+                                      // 禁止点击任意地方取消
+                                      .setEverywhereCancelable(false)
                                       .setBackgroundColor(ContextCompat.getColor(this, R.color.shadow))
-                                      .setLayoutRes(R.layout.guide_view_1, R.id.tv_i_know))// 引导页说明布局
+                                      // 引导页说明布局
+                                      .setLayoutRes(R.layout.guide_view_1, R.id.tv_i_know))
                 .addGuidePage(GuidePage.newInstance()
                                       .addHighLight(guide2, HighLight.Shape.ROUND_RECTANGLE, 16)
                                       .setEverywhereCancelable(false)
@@ -239,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
                         // 获取第一匹配
                         Prediction prediction = predictions.get(0);
                         // 当匹配值大于3
-                        if (prediction.score > 3) {
+                        if (prediction.score > KEY_MATCH_SCORE) {
                             // 进入开挂模式
-                            if ("开挂".equals(prediction.name)) {
+                            if (KEY_CHEAT.equals(prediction.name)) {
                                 cheatStar.setVisibility(View.VISIBLE);
                                 // 设置缩放动画（以自身中心为缩放点，从10%缩放到原始大小）
                                 ScaleAnimation animation = new ScaleAnimation(
@@ -336,7 +351,8 @@ public class MainActivity extends AppCompatActivity {
         // 保存游戏模式
         SaveConfigUtil.putCurrentGameMode(this, 0);
         titleDescribe.setText(getResources().getString(R.string.game_mode_classics));
-        bestScores.setText(String.valueOf(Config.BestScore));// 读取到历史最高分
+        // 读取到历史最高分
+        bestScores.setText(String.valueOf(Config.BestScore));
         bestScoresRank.setText(getString(R.string.best_score_rank, Config.GIRDColumnCount));
         currentScores.setText("0");
         modeDescribe.setText(getResources().getString(R.string.tv_describe));
@@ -371,7 +387,8 @@ public class MainActivity extends AppCompatActivity {
                 .setOnPositiveClickedListener("", v -> {
                     Config.haveCheat = false;
                     GameView.getGameView().resetGame();
-                    currentScores.setText("0");// 重置分数
+                    // 重置分数
+                    currentScores.setText("0");
                     dialog.dismiss();
                 }).show();
     }
@@ -390,8 +407,8 @@ public class MainActivity extends AppCompatActivity {
                     if (!isUpdateClicked) {
                         onUpdate(true);
                         isUpdateClicked = true;
+                        Toast.makeText(MainActivity.this, "正在检测新版本", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(MainActivity.this, "正在检测新版本", Toast.LENGTH_SHORT).show();
                 }).show();
     }
     
@@ -423,7 +440,8 @@ public class MainActivity extends AppCompatActivity {
                     // 当更新版本号不是忽略的版本号时
                     if (ignoreVersionCode != updateVersionCode) {
                         checkUpdate(fromUser);
-                    } else if (fromUser) {// 来自用户手动检查更新
+                    } else if (fromUser) {
+                        // 来自用户手动检查更新
                         checkUpdate(true);
                     }
                 }
@@ -446,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 // 申请获取权限
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                ActivityCompat.requestPermissions(MainActivity.this, new String[] {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             } else {
                 showUpdateDialog();
@@ -465,11 +483,9 @@ public class MainActivity extends AppCompatActivity {
     public void showUpdateDialog() {
         updateDialog = new CustomUpdateDialog.Builder(this, R.style.CustomDialog)
                                .setVersionName(
-                                       getResources().getString(
-                                               R.string.tv_find_new_version, update.getNew_version()))
+                                       getResources().getString(R.string.tv_find_new_version, update.getNew_version()))
                                .setVersionSize(
-                                       getResources().getString(
-                                               R.string.tv_version_size, update.getTarget_size()))
+                                       getResources().getString(R.string.tv_version_size, update.getTarget_size()))
                                .setVersionLog(update.getUpdate_log())
                                .setUpdateButtonListener(v -> {
                                    isUpdateClicked = false;
@@ -500,22 +516,32 @@ public class MainActivity extends AppCompatActivity {
      * 下载最新APK
      */
     private void downloadAPK() {
-        new Thread(() -> {
-            Aria.download(this)
-                    .load(update.getApk_file_url())// 下载地址
-                    .setFilePath(Config.apkFilePath)// 保存路径
-                    .start();// 启动下载
-        }).start();
+        Config.executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Aria.download(this)
+                        // 下载地址
+                        .load(update.getApk_file_url())
+                        // 保存路径
+                        .setFilePath(Config.apkFilePath)
+                        // 启动下载
+                        .start();
+            }
+        });
     }
     
     
-    // 下载任务正在运行
+    /**
+     * 下载任务正在运行
+     */
     @Download.onTaskRunning()
     void taskRunning(DownloadTask task) {
         updateDialog.setProgressPercent(task.getPercent());
     }
     
-    // 下载任务完成
+    /**
+     * 下载任务完成
+     */
     @Download.onTaskComplete
     void taskComplete(DownloadTask task) {
         updateDialog.updateComplete();
@@ -544,7 +570,8 @@ public class MainActivity extends AppCompatActivity {
                 toInstallIntent.setDataAndType(Uri.fromFile(apkFile),
                         "application/vnd.android.package-archive");
             }
-            startActivity(toInstallIntent);// 跳转安装界面
+            // 跳转安装界面
+            startActivity(toInstallIntent);
         }
     }
     
@@ -622,7 +649,8 @@ public class MainActivity extends AppCompatActivity {
         Config.GIRDColumnCount = difficulty;
         Config.VolumeState = volumeState;
         GameView.getGameView().initView(0);
-        currentScores.setText("0");// 重置得分
+        // 重置得分
+        currentScores.setText("0");
         bestScoresRank.setText(getString(R.string.best_score_rank, difficulty));
         bestScores.setText(String.valueOf(SaveConfigUtil.getBestScore(this)));
         // 保存游戏难度
@@ -718,7 +746,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(shareIntent);
     }
     
-    // 回调方法
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         switch (requestCode) {

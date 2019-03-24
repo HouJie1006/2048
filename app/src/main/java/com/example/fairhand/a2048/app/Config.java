@@ -2,13 +2,22 @@ package com.example.fairhand.a2048.app;
 
 import android.app.Application;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 
 import com.arialyy.aria.core.Aria;
 import com.example.fairhand.a2048.util.SaveConfigUtil;
 
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
- * Created by FairHand on 2018/10/4.<br />
  * 应用配置
+ *
+ * @author FairHand
+ * @date 2018/10/4
  */
 public class Config extends Application {
     
@@ -131,7 +140,33 @@ public class Config extends Application {
      * 安装包路径
      */
     public static String apkFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                                           + "/2048TR/" + "2048TR.apk";
+                                               + "/2048TR/" + "2048TR.apk";
+    
+    /**
+     * 手动创建一个线程池<br/>
+     * corePoolSize:核心线程数<br/>
+     * maximumPoolSize:最大线程数<br/>
+     * keepAliveTime:非核心线程最多存活事件<br/>
+     * unit:keepAliveTime的单位<br/>
+     * workQueue:线程池的任务队列<br/>
+     * threadFactory:给线程起个名字<br/>
+     * handler:抛异常
+     */
+    public static ThreadPoolExecutor executor = new ThreadPoolExecutor(
+            5,
+            10,
+            60,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(),
+            new ThreadFactory() {
+                private final AtomicInteger mCount = new AtomicInteger(1);
+                
+                @Override
+                public Thread newThread(@NonNull Runnable r) {
+                    return new Thread(r, "AsyncTask #" + mCount.getAndIncrement());
+                }
+            },
+            new ThreadPoolExecutor.AbortPolicy());
     
     @Override
     public void onCreate() {
@@ -150,7 +185,8 @@ public class Config extends Application {
         BestScoreWithinInfinite = SaveConfigUtil.getBestScoreWithinInfinite(this);
         // 获取忽略更新的版本号
         IgnoreVersionCode = SaveConfigUtil.getIgnoreVersionCode(this);
-        Aria.init(this);// 初始化Aria
+        // 初始化Aria
+        Aria.init(this);
     }
     
 }

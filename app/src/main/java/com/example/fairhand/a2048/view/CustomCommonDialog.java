@@ -11,7 +11,8 @@ import android.widget.TextView;
 import com.example.fairhand.a2048.R;
 
 /**
- * Created by FairHand on 2018/10/6.<br />
+ * @author FairHand
+ * @date 2018/10/6
  */
 public class CustomCommonDialog extends Dialog {
     

@@ -13,7 +13,8 @@ import com.example.fairhand.a2048.app.Config;
 import com.example.fairhand.a2048.util.SaveConfigUtil;
 
 /**
- * Created by FairHand on 2018/10/4.<br />
+ * @author FairHand
+ * @date 2018/10/4
  * 自定义配置对话框
  */
 public class CustomConfigDialog extends BaseDialog {

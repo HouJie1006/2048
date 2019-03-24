@@ -10,8 +10,10 @@ import com.example.fairhand.a2048.R;
 import com.example.fairhand.a2048.app.Config;
 
 /**
- * Created by FairHand on 2018/10/2.<br />
  * 小格子
+ *
+ * @author FairHand
+ * @date 2018/10/2
  */
 public class Cell extends FrameLayout {
     
@@ -55,9 +57,12 @@ public class Cell extends FrameLayout {
                 break;
         }
         cellShowText.setGravity(Gravity.CENTER);
-        cellShowText.getPaint().setAntiAlias(true);// 抗锯齿
-        cellShowText.getPaint().setFakeBoldText(true);// 粗体
-        LayoutParams params = new LayoutParams(-1, -1);// 填充整个父容器
+        // 抗锯齿
+        cellShowText.getPaint().setAntiAlias(true);
+        // 粗体
+        cellShowText.getPaint().setFakeBoldText(true);
+        // 填充整个父容器
+        LayoutParams params = new LayoutParams(-1, -1);
         params.setMargins(leftMargin, topMargin, 0, bottomMargin);
         addView(cellShowText, params);
         setDigital(0);
@@ -88,7 +93,6 @@ public class Cell extends FrameLayout {
         } else {
             cellShowText.setText(String.valueOf(digital));
         }
-        
     }
     
     /**

@@ -12,7 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * Created by FairHand on 2018/10/6.<br />
+ * @author FairHand
+ * @date 2018/10/6
  */
 public abstract class BaseDialog extends Dialog {
     
@@ -23,17 +24,27 @@ public abstract class BaseDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         Window window = getWindow();
         assert window != null;
         setTranslucentStatus(window);
         setContentView(setView());
         // 设置Dialog全屏
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         initData();
     }
     
+    /**
+     * 设置Dialog视图
+     *
+     * @return view id
+     */
     protected abstract int setView();
     
+    /**
+     * 初始化数据
+     */
     protected abstract void initData();
     
     /**
@@ -41,11 +52,12 @@ public abstract class BaseDialog extends Dialog {
      */
     private void setTranslucentStatus(Window window) {
         if (window != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明
+            // 5.0 全透明
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(Color.TRANSPARENT);
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            } else {//4.4 全透明
+            } else {// 4.4 全透明
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 }
