@@ -11,7 +11,6 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -125,16 +124,12 @@ public class GameView extends GridLayout {
         // 移除所有视图，以便更改游戏难度
         removeAllViews();
         // 初始化格子
-        if (mode == 0) {
+        if (mode == Constant.MODE_CLASSIC) {
             // 经典模式
             gridColumnCount = Config.GRIDColumnCount;
-
-            Log.d("测试", "房贷首付" + gridColumnCount);
-        } else if (mode == 1) {
+        } else if (mode == Constant.MODE_INFINITE) {
             // 无限模式
             gridColumnCount = 6;
-
-            Log.d("测试", "了房价肯定是见风使舵" + gridColumnCount);
         }
         cells = new Cell[gridColumnCount][gridColumnCount];
         // 设置界面大小

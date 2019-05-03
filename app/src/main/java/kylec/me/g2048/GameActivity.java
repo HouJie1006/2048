@@ -26,18 +26,12 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
-
-import com.app.hubert.guide.NewbieGuide;
-import com.app.hubert.guide.listener.AnimationListenerAdapter;
-import com.app.hubert.guide.model.GuidePage;
-import com.app.hubert.guide.model.HighLight;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -69,8 +63,6 @@ public class GameActivity extends AppCompatActivity {
     private Button reset;
     private Button menu;
     private ImageView cheatStar;
-    private LinearLayout score;
-    private LinearLayout bestScore;
     private GameView gameView;
 
     private BroadcastReceiver myReceiver;
@@ -90,7 +82,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initGuide();
         initData();
         initGesture();
     }
@@ -108,7 +99,7 @@ public class GameActivity extends AppCompatActivity {
                 // 10S保存一次游戏进度
                 saveGameProgress();
             }
-        }, 5000, 10 * 1000);
+        }, 5 * 1000, 10 * 1000);
     }
 
     @Override
@@ -154,8 +145,6 @@ public class GameActivity extends AppCompatActivity {
         mGestureOverlayView = findViewById(R.id.gesture_overlay_view);
         cheatStar = findViewById(R.id.iv_show_cheat);
         gameView = findViewById(R.id.game_view);
-        score = findViewById(R.id.ll_scores);
-        bestScore = findViewById(R.id.ll_best_score);
 
         // 进入经典模式
         if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
@@ -195,40 +184,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
-     * 初始化引导
-     */
-    private void initGuide() {
-        NewbieGuide.with(this)
-                // 设置引导页的标签
-                .setLabel("guide")
-                // 添加一页引导页
-                .addGuidePage(GuidePage.newInstance()
-                        // 高亮区域
-                        .addHighLight(score, HighLight.Shape.ROUND_RECTANGLE, 16)
-                        // 禁止点击任意地方取消
-                        .setEverywhereCancelable(false)
-                        .setBackgroundColor(ContextCompat.getColor(this, R.color.shadow))
-                        // 引导页说明布局
-                        .setLayoutRes(R.layout.guide_view_1, R.id.tv_i_know))
-                .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(bestScore, HighLight.Shape.ROUND_RECTANGLE, 16)
-                        .setEverywhereCancelable(false)
-                        .setBackgroundColor(ContextCompat.getColor(this, R.color.shadow))
-                        .setLayoutRes(R.layout.guide_view_2, R.id.tv_i_know))
-                .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(titleDescribe, HighLight.Shape.ROUND_RECTANGLE, 16)
-                        .setEverywhereCancelable(false)
-                        .setBackgroundColor(ContextCompat.getColor(this, R.color.shadow))
-                        .setLayoutRes(R.layout.guide_view_3, R.id.tv_i_know))
-                .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(gameView, HighLight.Shape.ROUND_RECTANGLE, 16)
-                        .setEverywhereCancelable(false)
-                        .setBackgroundColor(ContextCompat.getColor(this, R.color.shadow))
-                        .setLayoutRes(R.layout.guide_view_4, R.id.tv_i_know))
-                .show();
-    }
-
-    /**
      * 初始化手势
      */
     private void initGesture() {
@@ -256,10 +211,18 @@ public class GameActivity extends AppCompatActivity {
                                         Animation.RELATIVE_TO_SELF, 0.5f);
                                 animation.setDuration(999);
                                 cheatStar.startAnimation(animation);
-                                animation.setAnimationListener(new AnimationListenerAdapter() {
+                                animation.setAnimationListener(new Animation.AnimationListener() {
+                                    @Override
+                                    public void onAnimationStart(Animation animation) {
+                                    }
+
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         showCheatModeDialog();
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation) {
                                     }
                                 });
                             }
@@ -501,7 +464,10 @@ public class GameActivity extends AppCompatActivity {
                                 .setTitle(result)
                                 .setOnShareClickListener(v -> share())
                                 .setOnGoOnClickListener(v -> {
-                                    gameView.initView(Constant.MODE_CLASSIC);
+                                    // 清除缓存
+                                    deleteCache(Config.getTableName());
+                                    saveCurrentScore(0);
+                                    gameView.initView(Config.CurrentGameMode);
                                     currentScores.setText("0");
                                     dialog.cancel();
                                 }).show(), 666);
