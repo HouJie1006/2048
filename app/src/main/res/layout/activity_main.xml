@@ -1,218 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    android:background="@color/colorPrimary">
 
-    <RelativeLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/ic_trophy"
+        android:gravity="center"
+        android:text="@string/tip_trophy"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.32" />
+
+    <LinearLayout
+        android:id="@+id/ll_scores"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
-        app:layout_heightPercent="18%"
-        app:layout_widthPercent="100%">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_score_panel"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/ll_best_score"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="21dp"
-            android:layout_marginRight="21dp"
-            app:layout_heightPercent="18%"
-            app:layout_widthPercent="100%">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/tv_current_score"
+            android:textColor="#f9f8fd" />
 
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="12dp"
-                android:orientation="vertical"
-                app:layout_heightPercent="100%"
-                app:layout_widthPercent="30%">
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_title" />
-
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/ll_scores"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/bg_score_panel"
-                android:orientation="vertical"
-                app:layout_heightPercent="50%"
-                app:layout_widthPercent="25%">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/tv_current_score"
-                    android:textColor="#f9f8fd"
-                    app:layout_heightPercent="36%"
-                    app:layout_textSizePercent="20%" />
-
-                <TextView
-                    android:id="@+id/tv_current_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="-5dp"
-                    android:text="@string/no_score"
-                    android:textColor="#f4f5f9"
-                    android:textStyle="bold"
-                    app:layout_textSizePercent="42%" />
-
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/ll_best_score"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_score_panel"
-                android:orientation="vertical"
-                app:layout_heightPercent="50%"
-                app:layout_widthPercent="25%">
-
-                <TextView
-                    android:id="@+id/tv_best_score_rank"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/tv_best_score"
-                    android:textColor="#f9f8fd"
-                    app:layout_heightPercent="36%"
-                    app:layout_textSizePercent="20%" />
-
-                <TextView
-                    android:id="@+id/tv_best_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="-5dp"
-                    android:text="@string/no_score"
-                    android:textColor="#f4f5f9"
-                    android:textStyle="bold"
-                    app:layout_textSizePercent="42%" />
-
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-        </com.zhy.android.percent.support.PercentLinearLayout>
-
-        <com.zhy.android.percent.support.PercentRelativeLayout
+        <TextView
+            android:id="@+id/tv_current_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="RelativeOverlap">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/no_score"
+            android:textColor="#f4f5f9"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_title_describe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toStartOf="@+id/btn_option"
-                android:layout_toLeftOf="@+id/btn_option"
-                android:gravity="center_horizontal"
-                android:text="@string/game_mode_classics"
-                app:layout_marginRightPercent="9%w"
-                app:layout_textSizePercent="12%" />
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_option"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/bg_button_reset"
-                android:text="@string/btn_option"
-                app:layout_heightPercent="28%"
-                app:layout_marginRightPercent="9%w"
-                app:layout_widthPercent="16%" />
+    <LinearLayout
+        android:id="@+id/ll_best_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_score_panel"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ll_scores"
+        app:layout_constraintTop_toTopOf="parent">
 
-        </com.zhy.android.percent.support.PercentRelativeLayout>
+        <TextView
+            android:id="@+id/tv_best_score_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/tv_best_score"
+            android:textColor="#f9f8fd" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_best_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/no_score"
+            android:textColor="#f4f5f9"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/game_mode_classics"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/btn_option"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/ll_scores" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:padding="8dp"
+        android:text="@string/btn_option"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        app:backgroundTint="#9BD7D5"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/ll_best_score"
+        app:layout_constraintTop_toBottomOf="@+id/ll_best_score" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.22" />
 
     <TextView
         android:id="@+id/tv_mode_describe"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/tv_describe"
         android:textColor="@color/bgColor"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_heightPercent="5%"
-        app:layout_textSizePercent="2.6%h" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-    <com.example.fairhand.a2048.view.GameView
+    <kylec.me.g2048.view.GameView
         android:id="@+id/game_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_game_panel" />
+        android:background="@drawable/bg_game_panel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mode_describe" />
 
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:layout_width="match_parent"
+    <!--Android:gestureStrokeAngleThreshold
+       一笔必须包含的最小曲线度
+       不设置无法直接识别竖直手势-->
+    <android.gesture.GestureOverlayView
+        android:id="@+id/gesture_overlay_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginTop="12dp"
+        android:fadeOffset="666"
+        android:gestureColor="@android:color/transparent"
+        android:gestureStrokeAngleThreshold="160"
+        android:gestureStrokeType="multiple"
+        android:uncertainGestureColor="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game_view" />
 
-        <!--Android:gestureStrokeAngleThreshold
-        一笔必须包含的最小曲线度
-        不设置无法直接识别竖直手势-->
-        <android.gesture.GestureOverlayView
-            android:id="@+id/gesture_overlay_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fadeOffset="666"
-            android:gestureColor="@android:color/transparent"
-            android:gestureStrokeAngleThreshold="160"
-            android:gestureStrokeType="multiple"
-            android:uncertainGestureColor="@android:color/transparent" />
+    <ImageView
+        android:id="@+id/iv_show_cheat"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_cheat_kick_starter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription" />
 
-        <Button
-            android:id="@+id/btn_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_reset"
-            android:text="@string/btn_reset" />
+    <Button
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_button_reset"
+        android:text="@string/btn_reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_show_cheat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="12dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_cheat_kickstarter"
-            android:visibility="invisible"
-            app:layout_marginLeftPercent="36%w" />
-
-    </com.zhy.android.percent.support.PercentRelativeLayout>
-
-</com.zhy.android.percent.support.PercentLinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
