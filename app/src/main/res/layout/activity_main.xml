@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorTheme">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:drawableTop="@drawable/ic_trophy"
-        android:gravity="center"
-        android:text="@string/tip_trophy"
+        android:scaleX="1.64"
+        android:scaleY="1.64"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -43,7 +43,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="2dp"
             android:text="@string/tv_current_score"
-            android:textColor="#f9f8fd" />
+            android:textColor="@color/colorTextLow" />
 
         <TextView
             android:id="@+id/tv_current_score"
@@ -53,7 +53,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="8dp"
             android:text="@string/no_score"
-            android:textColor="#f4f5f9"
+            android:textColor="@color/colorTextDark"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="2dp"
             android:text="@string/tv_best_score"
-            android:textColor="#f9f8fd" />
+            android:textColor="@color/colorTextLow" />
 
         <TextView
             android:id="@+id/tv_best_score"
@@ -88,7 +88,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="8dp"
             android:text="@string/no_score"
-            android:textColor="#f4f5f9"
+            android:textColor="@color/colorTextDark"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -98,13 +98,14 @@
         android:id="@+id/tv_title_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="24dp"
         android:gravity="center_horizontal"
         android:text="@string/game_mode_classics"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/btn_option"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="@+id/ll_scores"
+        app:layout_constraintStart_toStartOf="@+id/ll_scores"
         app:layout_constraintTop_toBottomOf="@+id/ll_scores" />
 
     <com.google.android.material.button.MaterialButton
@@ -115,7 +116,7 @@
         android:padding="8dp"
         android:text="@string/btn_option"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        app:backgroundTint="#9BD7D5"
+        app:backgroundTint="@color/colorWhite"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@+id/ll_best_score"
@@ -126,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintGuide_percent="0.24" />
 
     <TextView
         android:id="@+id/tv_mode_describe"
@@ -134,7 +135,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/tv_describe"
-        android:textColor="@color/bgColor"
+        android:textColor="@color/colorTheme"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,10 +147,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_game_panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_mode_describe" />
@@ -189,7 +189,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@drawable/bg_button_reset"
+        android:background="@drawable/bg_button_white"
         android:text="@string/btn_reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -5,26 +5,27 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * @author FairHand
- * @date 2018/10/6
+ * Created by KYLE on 2018/10/6
  */
 public abstract class BaseDialog extends Dialog {
-    
+
     BaseDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         Window window = getWindow();
         assert window != null;
         setTranslucentStatus(window);
@@ -34,19 +35,19 @@ public abstract class BaseDialog extends Dialog {
                 ViewGroup.LayoutParams.MATCH_PARENT);
         initData();
     }
-    
+
     /**
      * 设置Dialog视图
      *
      * @return view id
      */
     protected abstract int setView();
-    
+
     /**
      * 初始化数据
      */
     protected abstract void initData();
-    
+
     /**
      * 透明状态栏
      */
@@ -64,5 +65,5 @@ public abstract class BaseDialog extends Dialog {
             }
         }
     }
-    
+
 }

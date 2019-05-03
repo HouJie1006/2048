@@ -15,4 +15,8 @@ public class Constant {
 
     static final String TABLE_NAME_INFINITE = "G_INFINITE";
 
+    public static final int MODE_CLASSIC = 0;
+
+    public static final int MODE_INFINITE = 1;
+
 }

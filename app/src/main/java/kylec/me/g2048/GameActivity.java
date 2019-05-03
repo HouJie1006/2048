@@ -48,9 +48,9 @@ import kylec.me.g2048.app.ConfigManager;
 import kylec.me.g2048.app.Constant;
 import kylec.me.g2048.db.CellEntity;
 import kylec.me.g2048.db.GameDatabaseHelper;
-import kylec.me.g2048.view.CustomCommonDialog;
-import kylec.me.g2048.view.CustomConfigDialog;
-import kylec.me.g2048.view.CustomOverDialog;
+import kylec.me.g2048.view.CommonDialog;
+import kylec.me.g2048.view.ConfigDialog;
+import kylec.me.g2048.view.GameOverDialog;
 import kylec.me.g2048.view.GameView;
 
 /**
@@ -74,11 +74,16 @@ public class GameActivity extends AppCompatActivity {
     private GameView gameView;
 
     private BroadcastReceiver myReceiver;
-    private CustomConfigDialog configDialog;
+    private ConfigDialog configDialog;
     private GestureOverlayView mGestureOverlayView;
 
     private GameDatabaseHelper gameDatabaseHelper;
     private SQLiteDatabase db;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, GameActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +98,6 @@ public class GameActivity extends AppCompatActivity {
     private Timer timer;
 
     @Override
-    protected void onPause() {
-        if (null != timer)
-            timer.cancel();
-        super.onPause();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
@@ -107,9 +105,10 @@ public class GameActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                // 10S保存一次游戏进度
                 saveGameProgress();
             }
-        }, 5000, 30 * 1000);
+        }, 5000, 10 * 1000);
     }
 
     @Override
@@ -159,11 +158,12 @@ public class GameActivity extends AppCompatActivity {
         bestScore = findViewById(R.id.ll_best_score);
 
         // 进入经典模式
-        if (Config.CurrentGameMode == 0) {
+        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
             // 读取到历史最高分
             bestScores.setText(String.valueOf(Config.BestScore));
             bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
-            gameView.initView(0);
+            currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
+            gameView.initView(Constant.MODE_CLASSIC);
         } else {
             // 进入无限模式
             enterInfiniteMode();
@@ -274,7 +274,7 @@ public class GameActivity extends AppCompatActivity {
      * 打开外挂模式对话框
      */
     private void showCheatModeDialog() {
-        CustomCommonDialog dialog = new CustomCommonDialog(this, R.style.CustomDialog);
+        CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
         dialog.setCancelable(false);
         dialog.setTitle("外挂机制")
                 .setMessage("小机灵鬼，这都被你发现了~将为您随机生成一个1024小方块，确认生成吗？")
@@ -293,17 +293,17 @@ public class GameActivity extends AppCompatActivity {
      */
     private void showChangeModeDialog() {
         String subject = "";
-        if (Config.CurrentGameMode == 0) {
+        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
             subject = "无限模式";
-        } else if (Config.CurrentGameMode == 1) {
+        } else if (Config.CurrentGameMode == Constant.MODE_INFINITE) {
             subject = "经典模式";
         }
-        CustomCommonDialog dialog = new CustomCommonDialog(this, R.style.CustomDialog);
+        CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
         dialog.setCancelable(true);
         dialog.setTitle(getResources().getString(R.string.tip))
                 .setMessage("是否要切换到" + subject)
                 .setOnPositiveClickedListener("", v -> {
-                    if (Config.CurrentGameMode == 0) {
+                    if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
                         Toast.makeText(GameActivity.this, "已进入无限模式", Toast.LENGTH_SHORT).show();
                         enterInfiniteMode();
                     } else {
@@ -321,16 +321,16 @@ public class GameActivity extends AppCompatActivity {
      */
     private void enterInfiniteMode() {
         Config.haveCheat = false;
-        Config.CurrentGameMode = 1;
+        Config.CurrentGameMode = Constant.MODE_INFINITE;
         // 保存游戏模式
-        ConfigManager.putCurrentGameMode(this, 1);
+        ConfigManager.putCurrentGameMode(this, Constant.MODE_INFINITE);
         titleDescribe.setText(getResources().getString(R.string.game_mode_infinite));
-        bestScores.setText(String.valueOf(Config.BestScoreWithinInfinite));
+        bestScores.setText(String.valueOf(ConfigManager.getBestScoreWithinInfinite(this)));
         bestScoresRank.setText(getResources().getText(R.string.tv_best_score_infinite));
-        currentScores.setText("0");
+        currentScores.setText(String.valueOf(ConfigManager.getCurrentScoreWithinInfinite(this)));
         modeDescribe.setText(getResources().getString(R.string.tv_describe_infinite));
         setTextStyle(titleDescribe);
-        gameView.initView(1);
+        gameView.initView(Constant.MODE_INFINITE);
     }
 
     /**
@@ -338,17 +338,17 @@ public class GameActivity extends AppCompatActivity {
      */
     private void enterClassicsMode() {
         Config.haveCheat = false;
-        Config.CurrentGameMode = 0;
+        Config.CurrentGameMode = Constant.MODE_CLASSIC;
         // 保存游戏模式
-        ConfigManager.putCurrentGameMode(this, 0);
+        ConfigManager.putCurrentGameMode(this, Constant.MODE_CLASSIC);
         titleDescribe.setText(getResources().getString(R.string.game_mode_classics));
         // 读取到历史最高分
         bestScores.setText(String.valueOf(Config.BestScore));
         bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
-        currentScores.setText("0");
+        currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
         modeDescribe.setText(getResources().getString(R.string.tv_describe));
         setTextStyle(titleDescribe);
-        gameView.initView(0);
+        gameView.initView(Constant.MODE_CLASSIC);
 
     }
 
@@ -358,7 +358,7 @@ public class GameActivity extends AppCompatActivity {
     private void setTextStyle(TextView textView) {
         SpannableString spannableString = new SpannableString(textView.getText().toString());
         StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
-        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#393E46"));
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#FFFFFF"));
         AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(52);
         spannableString.setSpan(styleSpan, 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         spannableString.setSpan(foregroundColorSpan, 0, 4, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -370,7 +370,7 @@ public class GameActivity extends AppCompatActivity {
      * 打开重置确认对话框
      */
     private void showConfirmDialog() {
-        CustomCommonDialog dialog = new CustomCommonDialog(this, R.style.CustomDialog);
+        CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
         dialog.setCancelable(false);
         dialog.setTitle(getResources().getString(R.string.tip))
                 .setMessage(getResources().getString(R.string.tip_reset_btn))
@@ -380,6 +380,7 @@ public class GameActivity extends AppCompatActivity {
                     gameView.resetGame();
                     // 重置分数
                     currentScores.setText("0");
+                    saveCurrentScore(0);
                     deleteCache(Config.getTableName());
                     dialog.cancel();
                 }).show();
@@ -389,7 +390,7 @@ public class GameActivity extends AppCompatActivity {
      * 打开配置对话框
      */
     private void showConfigDialog() {
-        configDialog = new CustomConfigDialog(this, R.style.CustomDialog);
+        configDialog = new ConfigDialog(this, R.style.CustomDialog);
         configDialog.setOnNegativeClickListener(v -> configDialog.cancel())
                 .setOnPositiveClickListener(v -> onDialogConfirm())
                 .show();
@@ -421,12 +422,12 @@ public class GameActivity extends AppCompatActivity {
     /**
      * 更改游戏配置
      */
-    private void changeConfiguration(CustomConfigDialog dialog, int difficulty, boolean volumeState) {
+    private void changeConfiguration(ConfigDialog dialog, int difficulty, boolean volumeState) {
         Config.GRIDColumnCount = difficulty;
         Config.VolumeState = volumeState;
-        gameView.initView(0);
+        gameView.initView(Constant.MODE_CLASSIC);
         // 重置得分
-        currentScores.setText("0");
+        currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
         bestScoresRank.setText(getString(R.string.best_score_rank, difficulty));
         bestScores.setText(String.valueOf(ConfigManager.getBestScore(this)));
         // 保存游戏难度
@@ -440,19 +441,15 @@ public class GameActivity extends AppCompatActivity {
      * 记录得分
      */
     private void recordScore(int score) {
-        // 获取历史分数
-        int historyScore = Integer.parseInt(currentScores.getText().toString());
-        // 得出当前分数
-        int currentScore = score + historyScore;
-        currentScores.setText(String.valueOf(currentScore));
+        currentScores.setText(String.valueOf(score));
         // 当前分数大于最高分
-        if (Config.CurrentGameMode == 0) {
-            if (currentScore > ConfigManager.getBestScore(this)) {
-                updateBestScore(currentScore);
+        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
+            if (score > ConfigManager.getBestScore(this)) {
+                updateBestScore(score);
             }
-        } else if (Config.CurrentGameMode == 1) {
-            if (currentScore > ConfigManager.getBestScoreWithinInfinite(this)) {
-                updateBestScore(currentScore);
+        } else if (Config.CurrentGameMode == Constant.MODE_INFINITE) {
+            if (score > ConfigManager.getBestScoreWithinInfinite(this)) {
+                updateBestScore(score);
             }
         }
     }
@@ -462,10 +459,10 @@ public class GameActivity extends AppCompatActivity {
      */
     private void updateBestScore(int newScore) {
         bestScores.setText(String.valueOf(newScore));
-        if (Config.CurrentGameMode == 0) {
+        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
             Config.BestScore = newScore;
             ConfigManager.putBestScore(this, newScore);
-        } else if (Config.CurrentGameMode == 1) {
+        } else if (Config.CurrentGameMode == Constant.MODE_INFINITE) {
             Config.BestScoreWithinInfinite = newScore;
             ConfigManager.putBestScoreWithinInfinite(this, newScore);
         }
@@ -484,12 +481,19 @@ public class GameActivity extends AppCompatActivity {
             if (action.equals(GameView.ACTION_RECORD_SCORE)) {
                 // 获取分数
                 int score = intent.getIntExtra(GameView.KEY_SCORE, 0);
-                recordScore(score);
-                // 你赢啦
+                // 获取历史分数
+                int historyScore = Integer.parseInt(currentScores.getText().toString());
+                saveCurrentScore(score + historyScore);
+                recordScore(score + historyScore);
+                // 游戏结束
             } else if (action.equals(GameView.ACTION_WIN)
                     || action.equals(GameView.ACTION_LOSE)) {
+                // 清除缓存
+                deleteCache(Config.getTableName());
+                saveCurrentScore(0);
+
                 String result = intent.getStringExtra(GameView.KEY_RESULT);
-                CustomOverDialog dialog = new CustomOverDialog(
+                GameOverDialog dialog = new GameOverDialog(
                         GameActivity.this, R.style.CustomDialog);
                 dialog.setCancelable(false);
                 new Handler().postDelayed(() ->
@@ -497,11 +501,19 @@ public class GameActivity extends AppCompatActivity {
                                 .setTitle(result)
                                 .setOnShareClickListener(v -> share())
                                 .setOnGoOnClickListener(v -> {
-                                    gameView.initView(0);
+                                    gameView.initView(Constant.MODE_CLASSIC);
                                     currentScores.setText("0");
                                     dialog.cancel();
                                 }).show(), 666);
             }
+        }
+    }
+
+    private void saveCurrentScore(int score) {
+        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
+            ConfigManager.putCurrentScore(GameActivity.this, score);
+        } else {
+            ConfigManager.putCurrentScoreWithinInfinite(GameActivity.this, score);
         }
     }
 
@@ -526,7 +538,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        CustomCommonDialog dialog = new CustomCommonDialog(this, R.style.CustomDialog);
+        CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
         dialog.setCancelable(false);
         dialog.setTitle("确认退出")
                 .setMessage("")

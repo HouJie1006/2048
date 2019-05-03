@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d4edf4</color>
-    <color name="colorPrimaryDark">#d4edf4</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/colorTheme</color>
+    <color name="colorPrimaryDark">@color/colorTheme</color>
+    <color name="colorAccent">#E7475E</color>
 
-    <color name="bgColor">#78c0a8</color>
+    <color name="colorTheme">#57407C</color>
+    <color name="colorThemeLow">#D957407C</color>
 
-    <color name="cell_0">#9BD7D5</color>
-    <color name="cell_2">#4ab4f4</color>
-    <color name="cell_4">#3399FF</color>
-    <color name="cell_8">#7F95D1</color>
-    <color name="cell_16">#6B78B4</color>
-    <color name="cell_32">#6a60a9</color>
-    <color name="cell_64">#e8a0b8</color>
-    <color name="cell_128">#DF7782</color>
-    <color name="cell_256">#ff7473</color>
-    <color name="cell_512">#ef5285</color>
-    <color name="cell_1024">#B9A7C2</color>
-    <color name="cell_2048">#996699</color>
+    <color name="cell_0">#3D2963</color>
+    <color name="cell_2">#41C9B8</color>
+    <color name="cell_4">#00B2A1</color>
+    <color name="cell_8">#ED5471</color>
+    <color name="cell_16">#C23361</color>
+    <color name="cell_32">#B81C64</color>
+    <color name="cell_64">#9E005D</color>
+    <color name="cell_128">#FFB33C</color>
+    <color name="cell_256">#F68530</color>
+    <color name="cell_512">#E85938</color>
+    <color name="cell_1024">#3C1F68</color>
+    <color name="cell_2048">#E6E6E6</color>
     <color name="cell_default">#FF4081</color>
     <color name="shadow">#E6797E7A</color>
+
+    <!-- 文字颜色(黑) 深 浅 -->
+    <color name="colorTextDark">#252A34</color>
+    <color name="colorTextLow">#393E46</color>
+
+    <color name="colorWhite">#E6E6E6</color>
 
 </resources>

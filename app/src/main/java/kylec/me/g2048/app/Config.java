@@ -12,67 +12,71 @@ public class Config extends Application {
     /**
      * 保存最高分的SharedPreferences
      */
-    public static String SAVE_BEST_SCORE = "SAVE_BEST_SCORE";
-
+    public static final String SAVE_BEST_SCORE = "SAVE_BEST_SCORE";
+    /**
+     * 保存当前得分的SharedPreferences
+     */
+    public static final String SAVE_CURRENT_SCORE = "SAVE_CURRENT_SCORE";
+    public static final String SAVE_CURRENT_SCORE_INFINITE = "SAVE_CURRENT_SCORE";
     /**
      * 保存游戏难度的SharedPreferences
      */
-    public static String SAVE_GAME_DIFFICULTY = "SAVE_GAME_DIFFICULTY";
+    public static final String SAVE_GAME_DIFFICULTY = "SAVE_GAME_DIFFICULTY";
 
     /**
      * 保存游戏音效状态的SharedPreferences
      */
-    public static String SAVE_GAME_VOLUME_STATE = "SAVE_GAME_VOLUME_STATE";
+    public static final String SAVE_GAME_VOLUME_STATE = "SAVE_GAME_VOLUME_STATE";
 
     /**
      * 保存达成游戏目标次数的SharedPreferences
      */
-    public static String SAVE_GET_GOAL_TIME = "SAVE_GET_GOAL_TIME";
+    public static final String SAVE_GET_GOAL_TIME = "SAVE_GET_GOAL_TIME";
 
     /**
      * 保存游戏模式的SharedPreferences
      */
-    public static String SAVE_CURRENT_GAME_MODE = "SAVE_CURRENT_GAME_MODE";
+    public static final String SAVE_CURRENT_GAME_MODE = "SAVE_CURRENT_GAME_MODE";
 
     /**
      * SharedPreferences保存4难度下最高分的KEY
      */
-    public static String KEY_BEST_SCORE_WITHIN_4 = "KEY_BEST_SCORE_WITHIN_4";
+    public static final String KEY_BEST_SCORE_WITHIN_4 = "KEY_BEST_SCORE_WITHIN_4";
 
     /**
      * SharedPreferences保存5难度下最高分的KEY
      */
-    public static String KEY_BEST_SCORE_WITHIN_5 = "KEY_BEST_SCORE_WITHIN_5";
+    public static final String KEY_BEST_SCORE_WITHIN_5 = "KEY_BEST_SCORE_WITHIN_5";
 
     /**
      * SharedPreferences保存6难度下最高分的KEY
      */
-    public static String KEY_BEST_SCORE_WITHIN_6 = "KEY_BEST_SCORE_WITHIN_6";
+    public static final String KEY_BEST_SCORE_WITHIN_6 = "KEY_BEST_SCORE_WITHIN_6";
 
     /**
      * SharedPreferences保存无限模式下最高分的KEY
      */
-    public static String KEY_BEST_SCORE_WITHIN_INFINITE = "KEY_BEST_SCORE_WITHIN_INFINITE";
+    public static final String KEY_BEST_SCORE_WITHIN_INFINITE = "KEY_BEST_SCORE_WITHIN_INFINITE";
 
     /**
      * SharedPreferences保存游戏难度的KEY
      */
-    public static String KEY_GAME_DIFFICULTY = "KEY_GAME_DIFFICULTY";
+    public static final String KEY_GAME_DIFFICULTY = "KEY_GAME_DIFFICULTY";
 
     /**
      * SharedPreferences保存游戏音效状态的KEY
      */
-    public static String KEY_GAME_VOLUME_STATE = "KEY_GAME_VOLUME_STATE";
+    public static final String KEY_GAME_VOLUME_STATE = "KEY_GAME_VOLUME_STATE";
 
     /**
      * SharedPreferences保存达成游戏目标的KEY
      */
-    public static String KEY_GET_GOAL_TIME = "KEY_GET_GOAL_TIME";
+    public static final String KEY_GET_GOAL_TIME = "KEY_GET_GOAL_TIME";
 
     /**
      * SharedPreferences保存游戏模式的KEY
      */
-    public static String KEY_CURRENT_GAME_MOE = "KEY_CURRENT_GAME_MOE";
+    public static final String KEY_CURRENT_GAME_MOE = "KEY_CURRENT_GAME_MOE";
 
     /**
      * 最高得分

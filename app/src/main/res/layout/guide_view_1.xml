@@ -24,6 +24,7 @@
         android:layout_width="82dp"
         android:layout_height="82dp"
         android:src="@drawable/ic_arrow"
+        android:tint="@color/colorTheme"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         tools:ignore="ContentDescription" />
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_arrow"
         android:text="@string/tv_guide_1"
-        android:textColor="#9BD7D5"
+        android:textColor="@color/colorTheme"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/iv_arrow"

@@ -3,6 +3,7 @@ package kylec.me.g2048.view;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import android.view.Gravity;
 import android.widget.FrameLayout;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import kylec.me.g2048.R;
 import kylec.me.g2048.app.Config;
-
 
 /**
  * 小格子
@@ -63,6 +63,8 @@ public class Cell extends FrameLayout {
         cellShowText.getPaint().setAntiAlias(true);
         // 粗体
         cellShowText.getPaint().setFakeBoldText(true);
+        // 颜色
+        cellShowText.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
         // 填充整个父容器
         LayoutParams params = new LayoutParams(-1, -1);
         params.setMargins(leftMargin, topMargin, 0, bottomMargin);
@@ -129,7 +131,7 @@ public class Cell extends FrameLayout {
             case 2048:
                 return R.drawable.bg_cell_2048;
             default:
-                return R.drawable.bg_cell_default;
+                return R.drawable.bg_cell_0;
         }
     }
 
