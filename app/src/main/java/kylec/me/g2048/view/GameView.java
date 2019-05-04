@@ -294,7 +294,7 @@ public class GameView extends GridLayout {
         addDigital(false);
     }
 
-    private void reset() {
+    public void reset() {
         for (int i = 0; i < gridColumnCount; i++) {
             for (int j = 0; j < gridColumnCount; j++) {
                 cells[i][j].setDigital(0);
@@ -339,7 +339,6 @@ public class GameView extends GridLayout {
             }
         }
     }
-
 
     /**
      * 获取当前游戏进度

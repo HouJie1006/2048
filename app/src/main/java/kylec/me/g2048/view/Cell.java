@@ -131,7 +131,7 @@ public class Cell extends FrameLayout {
             case 2048:
                 return R.drawable.bg_cell_2048;
             default:
-                return R.drawable.bg_cell_0;
+                return R.drawable.bg_cell_default;
         }
     }
 

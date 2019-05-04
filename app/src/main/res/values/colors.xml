@@ -18,9 +18,8 @@
     <color name="cell_256">#F68530</color>
     <color name="cell_512">#E85938</color>
     <color name="cell_1024">#3C1F68</color>
-    <color name="cell_2048">#E6E6E6</color>
-    <color name="cell_default">#FF4081</color>
-    <color name="shadow">#E6797E7A</color>
+    <color name="cell_2048">#FF4081</color>
+    <color name="cell_default">#515BD4</color>
 
     <!-- 文字颜色(黑) 深 浅 -->
     <color name="colorTextDark">#252A34</color>

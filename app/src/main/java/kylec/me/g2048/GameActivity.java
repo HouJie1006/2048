@@ -72,6 +72,8 @@ public class GameActivity extends AppCompatActivity {
     private GameDatabaseHelper gameDatabaseHelper;
     private SQLiteDatabase db;
 
+    private boolean isNeedSave = true;
+
     public static void start(Context context) {
         Intent starter = new Intent(context, GameActivity.class);
         context.startActivity(starter);
@@ -92,12 +94,20 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        timer = new Timer();
+        if (null == timer) {
+            timer = new Timer();
+            startTiming();
+        }
+    }
+
+    private void startTiming() {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                // 10S保存一次游戏进度
-                saveGameProgress();
+                if (isNeedSave) {
+                    // 10S保存一次游戏进度
+                    saveGameProgress();
+                }
             }
         }, 5 * 1000, 10 * 1000);
     }
@@ -114,9 +124,12 @@ public class GameActivity extends AppCompatActivity {
 
         if (null != timer) {
             timer.cancel();
+            timer.purge();
+            timer = null;
         }
         if (null != gameDatabaseHelper) {
             gameDatabaseHelper.close();
+            gameDatabaseHelper = null;
         }
         super.onDestroy();
     }
@@ -452,12 +465,12 @@ public class GameActivity extends AppCompatActivity {
             } else if (action.equals(GameView.ACTION_WIN)
                     || action.equals(GameView.ACTION_LOSE)) {
                 // 清除缓存
+                isNeedSave = false;
                 deleteCache(Config.getTableName());
                 saveCurrentScore(0);
 
                 String result = intent.getStringExtra(GameView.KEY_RESULT);
-                GameOverDialog dialog = new GameOverDialog(
-                        GameActivity.this, R.style.CustomDialog);
+                GameOverDialog dialog = new GameOverDialog(GameActivity.this, R.style.CustomDialog);
                 dialog.setCancelable(false);
                 new Handler().postDelayed(() ->
                         dialog.setFinalScore(currentScores.getText().toString())
@@ -465,8 +478,11 @@ public class GameActivity extends AppCompatActivity {
                                 .setOnShareClickListener(v -> share())
                                 .setOnGoOnClickListener(v -> {
                                     // 清除缓存
+                                    isNeedSave = true;
+                                    gameView.reset();
                                     deleteCache(Config.getTableName());
                                     saveCurrentScore(0);
+
                                     gameView.initView(Config.CurrentGameMode);
                                     currentScores.setText("0");
                                     dialog.cancel();
