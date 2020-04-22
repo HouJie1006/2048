@@ -1,17 +1,37 @@
-package kylec.me.g2048.app;
+package kylec.hj.g2048.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
  * 保存配置工具
+ * 用SharedPreferences保存
  * <p>
  * Created by KYLE on 2018/10/4
  */
 public class ConfigManager {
 
     /**
+     * 保存当前时间
+     */
+    public static void putCurrentSecond(Context context,long currentSecond){
+        SharedPreferences.Editor editor = context.getSharedPreferences(
+                Config.SAVE_TIME,Context.MODE_PRIVATE).edit();
+        editor.putLong(Config.KEY_TIME,currentSecond).apply();
+    }
+
+    /**
+     * 获取当前时间
+     */
+    public static long getCurrentSecond(Context context){
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Config.SAVE_TIME,Context.MODE_PRIVATE);
+        return sharedPreferences.getLong(Config.KEY_TIME,0);
+    }
+
+    /**
      * 保存最高分
+     * todo(只留4*4)
      */
     public static void putBestScore(Context context, int bestScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
@@ -33,6 +53,7 @@ public class ConfigManager {
 
     /**
      * 获取最高分
+     * todo(只留4*4)
      */
     public static int getBestScore(Context context) {
         SharedPreferences sharedPreferences =
@@ -51,6 +72,7 @@ public class ConfigManager {
 
     /**
      * 保存当前得分
+     * todo(只留4*4)
      */
     public static void putCurrentScore(Context context, int currentScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
@@ -90,6 +112,7 @@ public class ConfigManager {
 
     /**
      * 保存无限模式下最高分
+     * todo(无限模式删除)
      */
     public static void putBestScoreWithinInfinite(Context context, int bestScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
@@ -99,6 +122,7 @@ public class ConfigManager {
 
     /**
      * 获取无限模式下最高分
+     * todo(无限模式删除)
      */
     public static int getBestScoreWithinInfinite(Context context) {
         SharedPreferences sharedPreferences =
@@ -108,6 +132,7 @@ public class ConfigManager {
 
     /**
      * 保存当前无限模式分数
+     * todo(无限模式删除)
      */
     public static void putCurrentScoreWithinInfinite(Context context, int currentScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
@@ -117,6 +142,7 @@ public class ConfigManager {
 
     /**
      * 获取当前无限模式分数
+     * todo(无限模式删除)
      */
     public static int getCurrentScoreWithinInfinite(Context context) {
         SharedPreferences sharedPreferences =
@@ -126,6 +152,7 @@ public class ConfigManager {
 
     /**
      * 保存游戏难度
+     * todo(删除，使用默认4*4)
      */
     public static void putGameDifficulty(Context context, int difficulty) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
@@ -135,6 +162,7 @@ public class ConfigManager {
 
     /**
      * 获取游戏难度
+     * todo(删除，使用默认4*4)
      */
     static int getGameDifficulty(Context context) {
         SharedPreferences sharedPreferences =
@@ -180,6 +208,7 @@ public class ConfigManager {
 
     /**
      * 保存游戏模式
+     * todo(删除，使用默认4*4)
      */
     public static void putCurrentGameMode(Context context, int mode) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
@@ -189,6 +218,7 @@ public class ConfigManager {
 
     /**
      * 获取游戏模式
+     * todo(删除，使用默认4*4)
      */
     static int getCurrentGameMode(Context context) {
         SharedPreferences sharedPreferences =

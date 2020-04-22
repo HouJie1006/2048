@@ -1,4 +1,4 @@
-package kylec.me.g2048.view;
+package kylec.hj.g2048.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import kylec.me.g2048.R;
-import kylec.me.g2048.app.Config;
-import kylec.me.g2048.app.ConfigManager;
-import kylec.me.g2048.app.Constant;
-import kylec.me.g2048.db.CellEntity;
-import kylec.me.g2048.db.GameDatabaseHelper;
+import kylec.hj.g2048.R;
+import kylec.hj.g2048.app.Config;
+import kylec.hj.g2048.app.ConfigManager;
+import kylec.hj.g2048.app.Constant;
+import kylec.hj.g2048.db.CellEntity;
+import kylec.hj.g2048.db.GameDatabaseHelper;
 
 /**
  * 2048界面
@@ -111,11 +111,13 @@ public class GameView extends GridLayout {
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initSoundPool();
+        // todo 调用com.hj.DataFor2048的数据库
         gameDatabaseHelper = new GameDatabaseHelper(context, Constant.DB_NAME, null, 1);
     }
 
     /**
      * @param mode 游戏模式 0：经典 1：无限
+     *             todo 只留4*4模式
      */
     @SuppressLint("ClickableViewAccessibility")
     public void initView(int mode) {
@@ -182,6 +184,7 @@ public class GameView extends GridLayout {
         });
     }
 
+
     private void playSound() {
         if (Config.VolumeState) {
             mSoundPool.play(soundID, 1.0f, 1.0f, 1, 0, 1.0f);
@@ -209,12 +212,13 @@ public class GameView extends GridLayout {
     private int getCellSize() {
         //  获取屏幕的宽度
         DisplayMetrics metrics = getResources().getDisplayMetrics();
+        //  屏幕的宽度-屏幕密度=卡片能放的总宽度
         int cardWidth = metrics.widthPixels - dp2px();
         return (cardWidth - 12) / gridColumnCount;
     }
 
     /**
-     * dp转换成px
+     * 屏幕密度dp转换成px
      */
     private int dp2px() {
         float scale = getContext().getResources().getDisplayMetrics().density;
@@ -243,9 +247,9 @@ public class GameView extends GridLayout {
             }
         }
     }
-
+    // todo 加入判断是重新开始（不查询直接删除数据内容开始），还是继续
     private void startGame() {
-        reset();
+        reset(); //初始化卡片
         ArrayList<CellEntity> data = new ArrayList<>();
         SQLiteDatabase db = gameDatabaseHelper.getWritableDatabase();
         Cursor cursor = db.query(Config.getTableName(), null, null, null,
@@ -263,6 +267,7 @@ public class GameView extends GridLayout {
         }
 
         if (data.size() <= 2) {
+            //添加随机数字
             initGame();
         } else {
             resumeGame(data);
@@ -294,6 +299,9 @@ public class GameView extends GridLayout {
         addDigital(false);
     }
 
+    /**
+     * 置空卡片内容
+     */
     public void reset() {
         for (int i = 0; i < gridColumnCount; i++) {
             for (int j = 0; j < gridColumnCount; j++) {
@@ -677,6 +685,7 @@ public class GameView extends GridLayout {
         }
 
         // 游戏结束，弹出提示框
+        //todo 比较排名，前十将分数加入数据库
         if (isOver) {
             canSwipe = false;
             sendGameOverMsg(ACTION_LOSE);

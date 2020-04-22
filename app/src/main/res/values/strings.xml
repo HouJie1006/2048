@@ -4,7 +4,7 @@
     <string name="tv_best_score">最高分(4)</string>
     <string name="tv_best_score_infinite">最高分(∞)</string>
     <string name="best_score_rank">最高分(%1$d)</string>
-    <string name="game_mode_classics">经典模式\n点击切换无限模式</string>
+    <string name="game_mode_classics">游戏时间</string>
     <string name="game_mode_infinite">无限模式\n点击切换经典模式</string>
     <string name="btn_reset">重置</string>
     <string name="no_score">0</string>

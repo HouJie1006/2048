@@ -95,7 +95,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_title_describe"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
@@ -107,6 +107,20 @@
         app:layout_constraintEnd_toEndOf="@+id/ll_scores"
         app:layout_constraintStart_toStartOf="@+id/ll_scores"
         app:layout_constraintTop_toBottomOf="@+id/ll_scores" />
+
+    <TextView
+        android:id="@+id/tv_title_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:text="00:00:00"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/ll_scores"
+        app:layout_constraintStart_toStartOf="@+id/ll_scores"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_option"
@@ -127,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.24213406" />
 
     <TextView
         android:id="@+id/tv_mode_describe"
@@ -142,7 +156,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-    <kylec.me.g2048.view.GameView
+    <kylec.hj.g2048.view.GameView
         android:id="@+id/game_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -157,6 +171,7 @@
     <!--Android:gestureStrokeAngleThreshold
        一笔必须包含的最小曲线度
        不设置无法直接识别竖直手势-->
+
     <android.gesture.GestureOverlayView
         android:id="@+id/gesture_overlay_view"
         android:layout_width="0dp"
@@ -169,8 +184,10 @@
         android:uncertainGestureColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_reset"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_view" />
+        app:layout_constraintTop_toBottomOf="@+id/game_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/iv_show_cheat"

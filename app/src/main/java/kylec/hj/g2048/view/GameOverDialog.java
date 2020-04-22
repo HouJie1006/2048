@@ -1,4 +1,4 @@
-package kylec.me.g2048.view;
+package kylec.hj.g2048.view;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
-import kylec.me.g2048.R;
+import kylec.hj.g2048.R;
 
 /**
  * 游戏结束对话框
@@ -39,6 +39,7 @@ public class GameOverDialog extends BaseDialog {
         init();
     }
 
+    // todo 增加保存到数据库的操作
     private void init() {
         TextView title = findViewById(R.id.tv_custom_title);
         TextView finalScore = findViewById(R.id.tv_final_score);

@@ -1,4 +1,4 @@
-package kylec.me.g2048.app;
+package kylec.hj.g2048.app;
 
 import android.app.Application;
 
@@ -113,6 +113,20 @@ public class Config extends Application {
      */
     public static boolean haveCheat = false;
 
+    /**
+     * 获取当前时间
+     */
+    public static long currentSecond = 0;
+    /**
+     * SharedPreferences保存游戏时间
+     */
+    public static final String SAVE_TIME = "SAVE_TIME";
+    /**
+     * SharedPreferences保存游戏时间的key
+     */
+    public static final String KEY_TIME = "KEY_TIME";
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -128,6 +142,8 @@ public class Config extends Application {
         CurrentGameMode = ConfigManager.getCurrentGameMode(this);
         // 获取无限模式下最高分
         BestScoreWithinInfinite = ConfigManager.getBestScoreWithinInfinite(this);
+        //获取时间
+        currentSecond = ConfigManager.getCurrentSecond(this);
     }
 
     public static String getTableName() {

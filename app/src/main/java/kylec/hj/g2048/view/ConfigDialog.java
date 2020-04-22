@@ -1,4 +1,4 @@
-package kylec.me.g2048.view;
+package kylec.hj.g2048.view;
 
 import android.content.Context;
 
@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import kylec.me.g2048.R;
-import kylec.me.g2048.app.Config;
+import kylec.hj.g2048.R;
+import kylec.hj.g2048.app.Config;
 
 /**
  * 自定义配置对话框
  * <p>
  * Created by KYLE on 2018/10/4
  */
+// todo 改成登入界面
 public class ConfigDialog extends BaseDialog {
 
     private View.OnClickListener onPositiveClickListener;

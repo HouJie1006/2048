@@ -1,5 +1,6 @@
-package kylec.me.g2048;
+package kylec.hj.g2048;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -37,15 +39,16 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import kylec.me.g2048.app.Config;
-import kylec.me.g2048.app.ConfigManager;
-import kylec.me.g2048.app.Constant;
-import kylec.me.g2048.db.CellEntity;
-import kylec.me.g2048.db.GameDatabaseHelper;
-import kylec.me.g2048.view.CommonDialog;
-import kylec.me.g2048.view.ConfigDialog;
-import kylec.me.g2048.view.GameOverDialog;
-import kylec.me.g2048.view.GameView;
+import kylec.hj.g2048.app.Config;
+import kylec.hj.g2048.app.ConfigManager;
+import kylec.hj.g2048.app.Constant;
+import kylec.hj.g2048.db.CellEntity;
+import kylec.hj.g2048.db.GameDatabaseHelper;
+import kylec.hj.g2048.utils.TimeUtils;
+import kylec.hj.g2048.view.CommonDialog;
+import kylec.hj.g2048.view.ConfigDialog;
+import kylec.hj.g2048.view.GameOverDialog;
+import kylec.hj.g2048.view.GameView;
 
 /**
  * Created by KYLE on 2018/10/2
@@ -59,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView bestScores;
     private TextView bestScoresRank;
     private TextView titleDescribe;
+    private TextView tvTitle;
     private TextView modeDescribe;
     private Button reset;
     private Button menu;
@@ -74,6 +78,10 @@ public class GameActivity extends AppCompatActivity {
 
     private boolean isNeedSave = true;
 
+    private Timer timer;
+
+    private boolean isPause = false;
+
     public static void start(Context context) {
         Intent starter = new Intent(context, GameActivity.class);
         context.startActivity(starter);
@@ -85,10 +93,56 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initData();
-        initGesture();
+        getTime();
+//        initGesture();
     }
 
-    private Timer timer;
+    /**
+     * 游戏计时器
+     * 04.22
+     */
+    private void getTime(){
+        @SuppressLint("HandlerLeak")
+        final Handler startTimeHandler = new Handler(){
+            public void handleMessage(android.os.Message msg) {
+                if (null != titleDescribe) {
+                    titleDescribe.setText((String) msg.obj);
+                    }
+                }
+        };
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    while(!isPause) {
+                        Config.currentSecond += 1000;
+                        ConfigManager.putCurrentSecond(GameActivity.this,Config.currentSecond);
+                        String time = TimeUtils.getFormatHMS(Config.currentSecond);
+                        Message msg = new Message();
+                        msg.obj = time;
+                        startTimeHandler.sendMessage(msg);
+
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        },0,1000L);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isPause = true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        isPause = false;
+    }
 
     @Override
     protected void onResume() {
@@ -153,6 +207,7 @@ public class GameActivity extends AppCompatActivity {
         bestScoresRank = findViewById(R.id.tv_best_score_rank);
         modeDescribe = findViewById(R.id.tv_mode_describe);
         titleDescribe = findViewById(R.id.tv_title_describe);
+        tvTitle = findViewById(R.id.tv_title);
         reset = findViewById(R.id.btn_reset);
         menu = findViewById(R.id.btn_option);
         mGestureOverlayView = findViewById(R.id.gesture_overlay_view);
@@ -170,6 +225,7 @@ public class GameActivity extends AppCompatActivity {
             // 进入无限模式
             enterInfiniteMode();
         }
+        setTextStyle(tvTitle);
         setTextStyle(titleDescribe);
     }
 
@@ -190,7 +246,7 @@ public class GameActivity extends AppCompatActivity {
         // 打开菜单
         menu.setOnClickListener(v -> showConfigDialog());
         // 切换模式
-        titleDescribe.setOnClickListener(v -> showChangeModeDialog());
+        //titleDescribe.setOnClickListener(v -> showChangeModeDialog());
 
         gameDatabaseHelper = new GameDatabaseHelper(this, Constant.DB_NAME, null, 1);
         db = gameDatabaseHelper.getWritableDatabase();
@@ -198,6 +254,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * 初始化手势
+     * todo 可以删除
      */
     private void initGesture() {
         if (!Config.haveCheat) {
@@ -248,6 +305,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * 打开外挂模式对话框
+     * todo 可以删除
      */
     private void showCheatModeDialog() {
         CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
@@ -266,6 +324,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * 打开切换模式对话框
+     *  todo 只留4*4
      */
     private void showChangeModeDialog() {
         String subject = "";
@@ -294,6 +353,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * 进入无限模式
+     * todo （可以删除）
      */
     private void enterInfiniteMode() {
         Config.haveCheat = false;
@@ -311,6 +371,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * 进入经典模式
+     * todo （可以删除）
      */
     private void enterClassicsMode() {
         Config.haveCheat = false;
@@ -358,6 +419,9 @@ public class GameActivity extends AppCompatActivity {
                     currentScores.setText("0");
                     saveCurrentScore(0);
                     deleteCache(Config.getTableName());
+                    //重置时间04.22
+                    titleDescribe.setText(TimeUtils.getFormatHMS(0));
+                    resetTime(0);
                     dialog.cancel();
                 }).show();
     }
@@ -482,13 +546,20 @@ public class GameActivity extends AppCompatActivity {
                                     gameView.reset();
                                     deleteCache(Config.getTableName());
                                     saveCurrentScore(0);
-
                                     gameView.initView(Config.CurrentGameMode);
                                     currentScores.setText("0");
                                     dialog.cancel();
                                 }).show(), 666);
             }
         }
+    }
+
+    /**
+     * 重置时间
+     */
+    private void resetTime(long currentSecond){
+        Config.currentSecond = 0;
+        ConfigManager.putCurrentSecond(GameActivity.this,currentSecond);
     }
 
     private void saveCurrentScore(int score) {
@@ -518,6 +589,9 @@ public class GameActivity extends AppCompatActivity {
         startActivity(shareIntent);
     }
 
+    /**
+     * 退出游戏时自动保存当前进度
+     */
     @Override
     public void onBackPressed() {
         CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
@@ -534,6 +608,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void saveGameProgress() {
+        // todo 加入时间time
         String tableName = Config.getTableName();
         deleteCache(tableName);
         // 保存新的数据

@@ -18,7 +18,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // 签名配置
+/*    // 签名配置
     signingConfigs {
         // 测试版本签名配置
         debug {
@@ -58,7 +58,7 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
+    }*/
 
     // 程序在编译的时候会检查lint,有任何错误提示会停止build
     lintOptions {
