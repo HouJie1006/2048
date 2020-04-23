@@ -36,7 +36,8 @@ public class ConfigManager {
     public static void putBestScore(Context context, int bestScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
                 Config.SAVE_BEST_SCORE, Context.MODE_PRIVATE).edit();
-        switch (Config.GRIDColumnCount) {
+        editor.putInt(Config.KEY_BEST_SCORE_WITHIN_4, bestScore).apply();
+/*        switch (Config.GRIDColumnCount) {
             case 4:// 难度4
                 editor.putInt(Config.KEY_BEST_SCORE_WITHIN_4, bestScore).apply();
                 break;
@@ -48,7 +49,7 @@ public class ConfigManager {
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     /**
@@ -58,7 +59,8 @@ public class ConfigManager {
     public static int getBestScore(Context context) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Config.SAVE_BEST_SCORE, Context.MODE_PRIVATE);
-        switch (Config.GRIDColumnCount) {
+        return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_4, 0);
+/*        switch (Config.GRIDColumnCount) {
             case 4:// 难度4
                 return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_4, 0);
             case 5:// 难度5
@@ -67,7 +69,7 @@ public class ConfigManager {
                 return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_6, 0);
             default:
                 return 0;
-        }
+        }*/
     }
 
     /**
@@ -77,7 +79,8 @@ public class ConfigManager {
     public static void putCurrentScore(Context context, int currentScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
                 Config.SAVE_CURRENT_SCORE, Context.MODE_PRIVATE).edit();
-        switch (Config.GRIDColumnCount) {
+        editor.putInt("KEY_CURRENT_SCORE_4", currentScore).apply();
+/*        switch (Config.GRIDColumnCount) {
             case 4:// 难度4
                 editor.putInt("KEY_CURRENT_SCORE_4", currentScore).apply();
                 break;
@@ -89,7 +92,7 @@ public class ConfigManager {
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     /**
@@ -98,7 +101,8 @@ public class ConfigManager {
     public static int getCurrentScore(Context context) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Config.SAVE_CURRENT_SCORE, Context.MODE_PRIVATE);
-        switch (Config.GRIDColumnCount) {
+        return sharedPreferences.getInt("KEY_CURRENT_SCORE_4", 0);
+/*        switch (Config.GRIDColumnCount) {
             case 4:// 难度4
                 return sharedPreferences.getInt("KEY_CURRENT_SCORE_4", 0);
             case 5:// 难度5
@@ -107,7 +111,7 @@ public class ConfigManager {
                 return sharedPreferences.getInt("KEY_CURRENT_SCORE_6", 0);
             default:
                 return 0;
-        }
+        }*/
     }
 
     /**

@@ -287,6 +287,7 @@ public class GameView extends GridLayout {
             cells[cell.getX()][cell.getY()].setDigital(cell.getNum());
             setAppearAnim(cells[cell.getX()][cell.getY()]);
         }
+
     }
 
     /**

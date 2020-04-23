@@ -7,6 +7,8 @@ public class Gamer {
 
     private String name;
     private int score;
+    private String time;
+
 
     public String getName() {
         return name;
@@ -31,8 +33,6 @@ public class Gamer {
     public void setTime(String time) {
         this.time = time;
     }
-
-    private String time;
 
 
 }

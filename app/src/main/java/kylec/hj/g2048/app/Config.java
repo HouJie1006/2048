@@ -147,7 +147,8 @@ public class Config extends Application {
     }
 
     public static String getTableName() {
-        if (CurrentGameMode == 0) {
+        return Constant.TABLE_NAME_4;
+/*        if (CurrentGameMode == 0) {
             switch (GRIDColumnCount) {
                 case 4:
                     return Constant.TABLE_NAME_4;
@@ -160,7 +161,7 @@ public class Config extends Application {
             }
         } else {
             return Constant.TABLE_NAME_INFINITE;
-        }
+        }*/
     }
 
 }

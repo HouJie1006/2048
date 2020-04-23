@@ -16,7 +16,7 @@ import kylec.hj.g2048.app.Config;
  * <p>
  * Created by KYLE on 2018/10/4
  */
-// todo 改成登入界面
+
 public class ConfigDialog extends BaseDialog {
 
     private View.OnClickListener onPositiveClickListener;
@@ -55,7 +55,7 @@ public class ConfigDialog extends BaseDialog {
         Button volumeON = findViewById(R.id.btn_volume_on);
         Button volumeOFF = findViewById(R.id.btn_volume_off);
         TextView getGoalTime = findViewById(R.id.tv_goal_get_time);
-        // 根据游戏难度选中按钮
+/*        // 根据游戏难度选中按钮
         switch (Config.GRIDColumnCount) {
             case 4:
                 difficulty4.setBackgroundResource(R.drawable.bg_button_select);
@@ -71,8 +71,8 @@ public class ConfigDialog extends BaseDialog {
                 break;
             default:
                 break;
-        }
-        // 根据配置参数选中按钮
+        }*/
+        // 根据配置参数选中音效按钮
         if (Config.VolumeState) {
             volumeON.setBackgroundResource(R.drawable.bg_button_select);
         } else {
@@ -86,7 +86,7 @@ public class ConfigDialog extends BaseDialog {
             confirm.setOnClickListener(onPositiveClickListener);
         }
 
-        difficulty4.setOnClickListener(v -> {
+/*        difficulty4.setOnClickListener(v -> {
             difficulty = 4;
             difficulty4.setBackgroundResource(R.drawable.bg_button_select);
             difficulty5.setBackgroundResource(R.drawable.bg_button_white);
@@ -103,7 +103,7 @@ public class ConfigDialog extends BaseDialog {
             difficulty4.setBackgroundResource(R.drawable.bg_button_white);
             difficulty5.setBackgroundResource(R.drawable.bg_button_white);
             difficulty6.setBackgroundResource(R.drawable.bg_button_select);
-        });
+        });*/
         volumeON.setOnClickListener(v -> {
             volumeState = true;
             volumeON.setBackgroundResource(R.drawable.bg_button_select);
@@ -115,7 +115,7 @@ public class ConfigDialog extends BaseDialog {
             volumeOFF.setBackgroundResource(R.drawable.bg_button_select);
         });
         getGoalTime.setText(Config.GetGoalTime == 0 ? "暂未达成" : String.valueOf(Config.GetGoalTime));
-        // 无限模式下游戏难度不可设置
+/*        // 无限模式下游戏难度不可设置
         if (Config.CurrentGameMode == 1) {
             difficulty4.setBackgroundResource(R.drawable.bg_button_useless);
             difficulty5.setBackgroundResource(R.drawable.bg_button_useless);
@@ -123,7 +123,7 @@ public class ConfigDialog extends BaseDialog {
             difficulty4.setEnabled(false);
             difficulty5.setEnabled(false);
             difficulty6.setEnabled(false);
-        }
+        }*/
     }
 
     /**
