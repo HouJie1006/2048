@@ -186,6 +186,7 @@ public class GameActivity extends AppCompatActivity {
         }
         if (gameTime != null){
             gameTime.cancel();
+            gameTime.purge();
             gameTime = null;
         }
         super.onDestroy();
