@@ -3,6 +3,7 @@ package kylec.hj.g2048.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
@@ -99,6 +100,8 @@ public class GameView extends GridLayout {
     public int gameMode;
 
     private GameDatabaseHelper gameDatabaseHelper;
+    private Context mContext;
+    private Context friendContext;
 
     public GameView(Context context) {
         this(context, null);
@@ -110,9 +113,16 @@ public class GameView extends GridLayout {
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.mContext = context;
         initSoundPool();
         // todo 调用com.hj.DataFor2048的数据库
-        gameDatabaseHelper = new GameDatabaseHelper(context, Constant.DB_NAME, null, 1);
+        try {
+            friendContext = mContext.createPackageContext("com.hj.datafor2048"
+                    ,Context.CONTEXT_IGNORE_SECURITY);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        gameDatabaseHelper = new GameDatabaseHelper(friendContext, Constant.DB_NAME, null, 1);
     }
 
     /**

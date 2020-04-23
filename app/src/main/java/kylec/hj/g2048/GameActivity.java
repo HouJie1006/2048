@@ -6,11 +6,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.gesture.GestureLibraries;
-import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
-import android.gesture.Prediction;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -24,12 +22,9 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -75,11 +70,13 @@ public class GameActivity extends AppCompatActivity {
 
     private GameDatabaseHelper gameDatabaseHelper;
     private SQLiteDatabase db;
+    private Context friendContext;
 
     private boolean isNeedSave = true;
 
     private Timer timer;
 
+    private Timer gameTime;
     private boolean isPause = false;
 
     public static void start(Context context) {
@@ -110,7 +107,8 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
         };
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        gameTime = new Timer();
+        gameTime.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -130,6 +128,7 @@ public class GameActivity extends AppCompatActivity {
 
             }
         },0,1000L);
+
     }
 
     @Override
@@ -184,6 +183,10 @@ public class GameActivity extends AppCompatActivity {
         if (null != gameDatabaseHelper) {
             gameDatabaseHelper.close();
             gameDatabaseHelper = null;
+        }
+        if (gameTime != null){
+            gameTime.cancel();
+            gameTime = null;
         }
         super.onDestroy();
     }
@@ -247,8 +250,14 @@ public class GameActivity extends AppCompatActivity {
         menu.setOnClickListener(v -> showConfigDialog());
         // 切换模式
         //titleDescribe.setOnClickListener(v -> showChangeModeDialog());
-
-        gameDatabaseHelper = new GameDatabaseHelper(this, Constant.DB_NAME, null, 1);
+        //共享DataFor2048的数据库（0423）
+        try {
+            friendContext = this.createPackageContext("com.hj.datafor2048"
+                    ,Context.CONTEXT_IGNORE_SECURITY);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        gameDatabaseHelper = new GameDatabaseHelper(friendContext, Constant.DB_NAME, null, 1);
         db = gameDatabaseHelper.getWritableDatabase();
     }
 
@@ -439,7 +448,7 @@ public class GameActivity extends AppCompatActivity {
      */
     private void onDialogConfirm() {
         // 获取选择的难度和音效状态
-        int difficulty = configDialog.getSelectDifficulty();
+//        int difficulty = configDialog.getSelectDifficulty();
         boolean volumeState = configDialog.getVolumeState();
         // 若选择的难度与当前难度一样
 //        if (difficulty == Config.GRIDColumnCount) {
@@ -572,11 +581,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void saveCurrentScore(int score) {
-        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
+        ConfigManager.putCurrentScore(GameActivity.this, score);
+/*        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
             ConfigManager.putCurrentScore(GameActivity.this, score);
         } else {
             ConfigManager.putCurrentScoreWithinInfinite(GameActivity.this, score);
-        }
+        }*/
     }
 
     /**
@@ -612,6 +622,7 @@ public class GameActivity extends AppCompatActivity {
                         v -> {
                             saveGameProgress();
                             finish();
+
                         })
                 .setOnPositiveClickedListener("我还要玩一会", v -> dialog.cancel())
                 .show();
