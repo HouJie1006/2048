@@ -21,6 +21,8 @@
     <color name="cell_2048">#FF4081</color>
     <color name="cell_default">#515BD4</color>
     <color name="purple">#a16ef3</color>
+    <color name="black">#4F4F4F</color>
+    <color name="grey">#999999</color>
 
     <!-- 文字颜色(黑) 深 浅 -->
     <color name="colorTextDark">#252A34</color>

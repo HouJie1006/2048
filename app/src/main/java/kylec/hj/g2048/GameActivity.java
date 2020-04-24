@@ -568,9 +568,10 @@ public class GameActivity extends AppCompatActivity {
                 new Handler().postDelayed(() ->
                         dialog.setFinalScore(currentScores.getText().toString())
                                 .setTitle(result)
-                                .setOnShareClickListener(v -> share())
+                                .setOnShareClickListener(v -> share())//比较数据添加至排行榜
                                 .setOnGoOnClickListener(v -> {
                                     // 清除缓存
+                                    // todo 改成返回主界面
                                     isNeedSave = true;
                                     gameView.reset();
                                     deleteCache(Config.getTableName());

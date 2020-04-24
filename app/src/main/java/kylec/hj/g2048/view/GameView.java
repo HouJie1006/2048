@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -27,6 +28,7 @@ import kylec.hj.g2048.app.ConfigManager;
 import kylec.hj.g2048.app.Constant;
 import kylec.hj.g2048.db.CellEntity;
 import kylec.hj.g2048.db.GameDatabaseHelper;
+import kylec.hj.g2048.db.Gamer;
 
 /**
  * 2048界面
@@ -117,7 +119,7 @@ public class GameView extends GridLayout {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         initSoundPool();
-        // todo 调用com.hj.DataFor2048的数据库
+        //调用com.hj.DataFor2048的数据库
         try {
             friendContext = mContext.createPackageContext("com.hj.datafor2048"
                     ,Context.CONTEXT_IGNORE_SECURITY);
@@ -701,12 +703,19 @@ public class GameView extends GridLayout {
                 }
             }
         }
-
+        List<Gamer> gamers = getList();
         // 游戏结束，弹出提示框
-        //todo 比较排名，前十将分数加入数据库
         if (isOver) {
-            canSwipe = false;
-            sendGameOverMsg(ACTION_LOSE);
+            if (gamers.size() == 10){
+                Gamer gamer = gamers.get(gamers.size() - 1);
+                if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
+                    sendGameOverMsg("ACTION_LOSE_IN");
+                }else {
+                    sendGameOverMsg(ACTION_LOSE);
+                }
+            }else if (gamers.size() < 10){
+                sendGameOverMsg("ACTION_LOSE_IN");
+            }
         }
 
         // 经典模式下才判赢
@@ -716,15 +725,47 @@ public class GameView extends GridLayout {
                 for (int j = 0; j < gridColumnCount; j++) {
                     // 有一个格子数字到达2048则视为达成目标
                     if (cells[i][j].getDigital() == 2048) {
-                        canSwipe = false;
                         int currentTime = ConfigManager.getGoalTime(getContext()) + 1;
                         ConfigManager.putGoalTime(getContext(), currentTime);
                         Config.GetGoalTime = currentTime;
-                        sendGameOverMsg(ACTION_WIN);
+
+                        if (gamers.size() == 10){
+                            Gamer gamer = gamers.get(gamers.size() - 1);
+                            if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
+                                sendGameOverMsg("ACTION_WIN_IN");
+                            }else {
+                                sendGameOverMsg(ACTION_WIN);
+                            }
+                        }else if (gamers.size() < 10){
+                            sendGameOverMsg("ACTION_WIN_IN");
+                        }
+
                     }
                 }
             }
         }
+    }
+
+    private List<Gamer> getList(){
+        List<Gamer> mList = new ArrayList<>();
+       SQLiteDatabase db = gameDatabaseHelper.getWritableDatabase();
+       Cursor cursor = db.query("info",null,null,null,null,null,null);
+       if (cursor != null){
+           while(cursor.moveToNext()){
+               int nameIndex = cursor.getColumnIndex("name");
+               int scoreIndex = cursor.getColumnIndex("score");
+               int idIndex = cursor.getColumnIndex("id");
+               int timeIndex = cursor.getColumnIndex("time");
+               String time = cursor.getString(timeIndex);
+               String name = cursor.getString(nameIndex);
+               int score = cursor.getInt(scoreIndex);
+               int id = cursor.getInt(idIndex);
+               mList.add(new Gamer(id,name,score,time));
+           }
+           return mList;
+       }
+
+        return mList;
     }
 
     /**
