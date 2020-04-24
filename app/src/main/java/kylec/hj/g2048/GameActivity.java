@@ -79,16 +79,18 @@ public class GameActivity extends AppCompatActivity {
     private Timer gameTime;
     private boolean isPause = false;
 
-    public static void start(Context context) {
+/*    public static void start(Context context) {
         Intent starter = new Intent(context, GameActivity.class);
         context.startActivity(starter);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("gameStatus");
+        initView(data);
         initData();
         getTime();
 //        initGesture();
@@ -195,7 +197,7 @@ public class GameActivity extends AppCompatActivity {
     /**
      * 初始化视图
      */
-    private void initView() {
+    private void initView(String gameStatus) {
         // 动态设置状态栏字体颜色
         if (isLightColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))) {
             // 亮色，设置字体黑色
@@ -218,17 +220,28 @@ public class GameActivity extends AppCompatActivity {
         cheatStar = findViewById(R.id.iv_show_cheat);
         gameView = findViewById(R.id.game_view);
 
-        // 进入经典模式
-//        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
-        // 读取到历史最高分
-        bestScores.setText(String.valueOf(Config.BestScore));
-        bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
+
+        if (gameStatus.equals("0")) {
+            //开始游戏
+            Config.gameStatus = gameStatus;
+            // 读取到历史最高分
+            bestScores.setText(String.valueOf(Config.BestScore));
+            bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
+            currentScores.setText("0");
+            saveCurrentScore(0);
+            //重置时间04.24
+            titleDescribe.setText(TimeUtils.getFormatHMS(0));
+            resetTime(0);
+            gameView.initView(Constant.MODE_CLASSIC);
+        } else if (gameStatus.equals("1")){
+            Config.gameStatus = gameStatus;
+            //继续游戏
+            bestScores.setText(String.valueOf(Config.BestScore));
+            bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
             currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
             gameView.initView(Constant.MODE_CLASSIC);
-/*        } else {
-            // 进入无限模式
-            enterInfiniteMode();
-        }*/
+
+        }
         setTextStyle(tvTitle);
         setTextStyle(titleDescribe);
     }
@@ -581,6 +594,10 @@ public class GameActivity extends AppCompatActivity {
         ConfigManager.putCurrentSecond(GameActivity.this,currentSecond);
     }
 
+    /**
+     * 保存当前得分
+     * @param score
+     */
     private void saveCurrentScore(int score) {
         ConfigManager.putCurrentScore(GameActivity.this, score);
 /*        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
@@ -630,12 +647,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void saveGameProgress() {
-        // todo 加入时间time
         String tableName = Config.getTableName();
         deleteCache(tableName);
         // 保存新的数据
         ArrayList<CellEntity> data = gameView.getCurrentProcess();
-        if (data.size() > 2) {
+        if (data.size() >= 2) {
             ContentValues values = new ContentValues();
             for (CellEntity cell : data) {
                 values.put("x", cell.getX());

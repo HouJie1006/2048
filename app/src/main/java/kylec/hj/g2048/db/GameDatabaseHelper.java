@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
  */
 public class GameDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String CREATE_G4 = "create table G4 ("
+/*    private static final String CREATE_G4 = "create table G4 ("
             + "id integer primary key autoincrement, "
             + "x integer, "
             + "y integer, "
@@ -46,9 +46,35 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_G5);
         db.execSQL(CREATE_G6);
         db.execSQL(CREATE_G_INFINITE);
+    }*/
+private static final String CREATE_G4 = "create table if not exists G4 ("
+        + "id integer primary key autoincrement, "
+        + "x integer, "
+        + "y integer, "
+        + "num integer)";
+
+    private static final String INFO = "create table if not exists info ("
+            + " id integer primary key,"
+            + " user_name varchar,"
+            + " score integer ,"
+            + "time varchar)";
+
+    public GameDatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+//        db.execSQL("create table if not exists info ( id integer primary key, user_name varchar, score integer ,time varchar)");
+//        db.execSQL("create table if not exists savegame ( id integer primary key, cards varchar, score integer,time long,name varchar)");
+        db.execSQL(CREATE_G4);
+        db.execSQL(INFO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("drop table if exists G4");
+        db.execSQL("drop table if exists info");
+        onCreate(db);
     }
 }

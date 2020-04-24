@@ -126,6 +126,11 @@ public class Config extends Application {
      */
     public static final String KEY_TIME = "KEY_TIME";
 
+    /**
+     * 游戏开始状态 0:重新开始（默认），1：继续游戏
+     */
+    public static String gameStatus = "0";
+
 
     @Override
     public void onCreate() {

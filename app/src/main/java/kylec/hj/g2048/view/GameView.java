@@ -99,6 +99,8 @@ public class GameView extends GridLayout {
      */
     public int gameMode;
 
+    public String gameStatus = "0";
+
     private GameDatabaseHelper gameDatabaseHelper;
     private Context mContext;
     private Context friendContext;
@@ -259,29 +261,34 @@ public class GameView extends GridLayout {
     }
     // todo 加入判断是重新开始（不查询直接删除数据内容开始），还是继续
     private void startGame() {
-        reset(); //初始化卡片
-        ArrayList<CellEntity> data = new ArrayList<>();
-        SQLiteDatabase db = gameDatabaseHelper.getWritableDatabase();
-        Cursor cursor = db.query(Config.getTableName(), null, null, null,
-                null, null, null);
-        if (null != cursor) {
-            if (cursor.moveToFirst()) {
-                do {
-                    int x = cursor.getInt(cursor.getColumnIndex("x"));
-                    int y = cursor.getInt(cursor.getColumnIndex("y"));
-                    int num = cursor.getInt(cursor.getColumnIndex("num"));
-                    data.add(new CellEntity(x, y, num));
-                } while (cursor.moveToNext());
+        gameStatus = Config.gameStatus;
+        if (gameStatus.equals("1")){
+            ArrayList<CellEntity> data = new ArrayList<>();
+            SQLiteDatabase db = gameDatabaseHelper.getWritableDatabase();
+            Cursor cursor = db.query(Config.getTableName(), null, null, null,
+                    null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        int x = cursor.getInt(cursor.getColumnIndex("x"));
+                        int y = cursor.getInt(cursor.getColumnIndex("y"));
+                        int num = cursor.getInt(cursor.getColumnIndex("num"));
+                        data.add(new CellEntity(x, y, num));
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
             }
-            cursor.close();
+            if (data.size() < 2) {
+                //添加随机数字
+                initGame();
+            } else {
+                resumeGame(data);
+            }
+        }else if(gameStatus.equals("0")){
+            reset(); //初始化卡片
+            initGame();
         }
 
-        if (data.size() <= 2) {
-            //添加随机数字
-            initGame();
-        } else {
-            resumeGame(data);
-        }
     }
 
     private void initGame() {

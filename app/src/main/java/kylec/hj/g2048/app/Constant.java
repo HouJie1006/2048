@@ -19,4 +19,8 @@ public class Constant {
 
     public static final int MODE_INFINITE = 1;
 
+    public static final String GAME_START = "0";
+
+    public static final String GAME_CONTINUE = "1";
+
 }
