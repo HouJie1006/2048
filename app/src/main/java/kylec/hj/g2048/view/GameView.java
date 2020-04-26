@@ -42,6 +42,8 @@ public class GameView extends GridLayout {
     public static final String ACTION_RECORD_SCORE = "ACTION_RECORD_SCORE";
     public static final String ACTION_WIN = "ACTION_WIN";
     public static final String ACTION_LOSE = "ACTION_LOSE";
+    public static final String ACTION_WIN_IN = "ACTION_WIN_IN";
+    public static final String ACTION_LOSE_IN = "ACTION_LOSE_IN";
 
     /**
      * 最小移动距离
@@ -749,10 +751,10 @@ public class GameView extends GridLayout {
     private List<Gamer> getList(){
         List<Gamer> mList = new ArrayList<>();
        SQLiteDatabase db = gameDatabaseHelper.getWritableDatabase();
-       Cursor cursor = db.query("info",null,null,null,null,null,null);
+       Cursor cursor = db.query("info",null,null,null,null,null,"score desc");
        if (cursor != null){
            while(cursor.moveToNext()){
-               int nameIndex = cursor.getColumnIndex("name");
+               int nameIndex = cursor.getColumnIndex("user_name");
                int scoreIndex = cursor.getColumnIndex("score");
                int idIndex = cursor.getColumnIndex("id");
                int timeIndex = cursor.getColumnIndex("time");
@@ -773,14 +775,22 @@ public class GameView extends GridLayout {
      */
     private void sendGameOverMsg(String action) {
         Intent intent = new Intent(action);
-        if (action.equals(ACTION_WIN)) {
-            intent.putExtra(KEY_RESULT, "You Win!");
-        }else if (action.equals("ACTION_WIN_IN")){
-            intent.putExtra(KEY_RESULT, "You Win and Input!");
-        }else if (action.equals("ACTION_LOSE_IN")){
-            intent.putExtra(KEY_RESULT, "You Lose but Input!");
-        } else {
-            intent.putExtra(KEY_RESULT, "You Lose!");
+        switch (action) {
+            case ACTION_WIN:
+                intent.putExtra(KEY_RESULT, "You Win!");
+                break;
+            case ACTION_WIN_IN:
+                intent.putExtra(KEY_RESULT, "You Win and Input!");
+                break;
+            case ACTION_LOSE_IN:
+                intent.putExtra(KEY_RESULT, "You Lose but Input!");
+                break;
+            case ACTION_LOSE:
+                intent.putExtra(KEY_RESULT, "You Lose!");
+                break;
+            default:
+                break;
+
         }
         getContext().sendBroadcast(intent);
     }

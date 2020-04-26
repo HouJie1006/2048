@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -211,12 +212,12 @@ public class GameActivity extends AppCompatActivity {
         currentScores = findViewById(R.id.tv_current_score);
         bestScores = findViewById(R.id.tv_best_score);
         bestScoresRank = findViewById(R.id.tv_best_score_rank);
-        modeDescribe = findViewById(R.id.tv_mode_describe);
         titleDescribe = findViewById(R.id.tv_title_describe);
         tvTitle = findViewById(R.id.tv_title);
         reset = findViewById(R.id.btn_reset);
         menu = findViewById(R.id.btn_option);
         mGestureOverlayView = findViewById(R.id.gesture_overlay_view);
+        modeDescribe = findViewById(R.id.tv_mode_describe);
         cheatStar = findViewById(R.id.iv_show_cheat);
         gameView = findViewById(R.id.game_view);
 
@@ -264,8 +265,6 @@ public class GameActivity extends AppCompatActivity {
         reset.setOnClickListener(v -> showConfirmDialog());
         // 打开菜单
         menu.setOnClickListener(v -> showConfigDialog());
-        // 切换模式
-        //titleDescribe.setOnClickListener(v -> showChangeModeDialog());
         //共享DataFor2048的数据库（0423）
         try {
             friendContext = this.createPackageContext("com.hj.datafor2048"
@@ -275,141 +274,6 @@ public class GameActivity extends AppCompatActivity {
         }
         gameDatabaseHelper = new GameDatabaseHelper(friendContext, Constant.DB_NAME, null, 1);
         db = gameDatabaseHelper.getWritableDatabase();
-    }
-
-    /**
-     * 初始化手势
-     * todo 可以删除
-     */
-/*    private void initGesture() {
-        if (!Config.haveCheat) {
-            // 定义手势库
-            GestureLibrary library = GestureLibraries.fromRawResource(this, R.raw.gestures);
-            // 设置手势监听（手势绘制完成调用）
-            mGestureOverlayView.addOnGesturePerformedListener((overlay, gesture) -> {
-                // 加载手势库成功
-                if (library.load()) {
-                    // 从手势库中查找所有匹配的手势
-                    ArrayList<Prediction> predictions = library.recognize(gesture);
-                    if (!predictions.isEmpty()) {
-                        // 获取第一匹配
-                        Prediction prediction = predictions.get(0);
-                        // 当匹配值大于3
-                        if (prediction.score > KEY_MATCH_SCORE) {
-                            // 进入开挂模式
-                            if (KEY_CHEAT.equals(prediction.name)) {
-                                cheatStar.setVisibility(View.VISIBLE);
-                                // 设置缩放动画（以自身中心为缩放点，从10%缩放到原始大小）
-                                ScaleAnimation animation = new ScaleAnimation(
-                                        0.1f, 1, 0.1f, 1,
-                                        Animation.RELATIVE_TO_SELF, 0.5f,
-                                        Animation.RELATIVE_TO_SELF, 0.5f);
-                                animation.setDuration(999);
-                                cheatStar.startAnimation(animation);
-                                animation.setAnimationListener(new Animation.AnimationListener() {
-                                    @Override
-                                    public void onAnimationStart(Animation animation) {
-                                    }
-
-                                    @Override
-                                    public void onAnimationEnd(Animation animation) {
-                                        showCheatModeDialog();
-                                    }
-
-                                    @Override
-                                    public void onAnimationRepeat(Animation animation) {
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    }*/
-
-    /**
-     * 打开外挂模式对话框
-     */
-/*    private void showCheatModeDialog() {
-        CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
-        dialog.setCancelable(false);
-        dialog.setTitle("外挂机制")
-                .setMessage("小机灵鬼，这都被你发现了~将为您随机生成一个1024小方块，确认生成吗？")
-                .setOnNegativeClickListener("", v -> dialog.cancel())
-                .setOnPositiveClickedListener("", v -> {
-                    Config.haveCheat = true;
-                    gameView.addDigital(true);
-                    Toast.makeText(GameActivity.this, "好了，就帮你到这了...", Toast.LENGTH_SHORT).show();
-                    dialog.cancel();
-                }).show();
-        cheatStar.setVisibility(View.INVISIBLE);
-    }*/
-
-    /**
-     * 打开切换模式对话框
-     */
-/*    private void showChangeModeDialog() {
-        String subject = "";
-        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
-            subject = "无限模式";
-        } else if (Config.CurrentGameMode == Constant.MODE_INFINITE) {
-            subject = "经典模式";
-        }
-        CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
-        dialog.setCancelable(true);
-        dialog.setTitle(getResources().getString(R.string.tip))
-                .setMessage("是否要切换到" + subject)
-                .setOnPositiveClickedListener("", v -> {
-                    if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
-                        Toast.makeText(GameActivity.this, "已进入无限模式", Toast.LENGTH_SHORT).show();
-                        enterInfiniteMode();
-                    } else {
-                        Toast.makeText(GameActivity.this, "已进入经典模式", Toast.LENGTH_SHORT).show();
-                        enterClassicsMode();
-                    }
-                    dialog.cancel();
-                })
-                .setOnNegativeClickListener("", v -> dialog.cancel())
-                .show();
-    }*/
-
-    /**
-     * 进入无限模式
-     *
-     */
-/*    private void enterInfiniteMode() {
-        Config.haveCheat = false;
-        Config.CurrentGameMode = Constant.MODE_INFINITE;
-        // 保存游戏模式
-        ConfigManager.putCurrentGameMode(this, Constant.MODE_INFINITE);
-        titleDescribe.setText(getResources().getString(R.string.game_mode_infinite));
-        bestScores.setText(String.valueOf(ConfigManager.getBestScoreWithinInfinite(this)));
-        bestScoresRank.setText(getResources().getText(R.string.tv_best_score_infinite));
-        currentScores.setText(String.valueOf(ConfigManager.getCurrentScoreWithinInfinite(this)));
-        modeDescribe.setText(getResources().getString(R.string.tv_describe_infinite));
-        setTextStyle(titleDescribe);
-        gameView.initView(Constant.MODE_INFINITE);
-    }*/
-
-    /**
-     * 进入经典模式
-     * todo 登入界面开始游戏调用的方法参考
-     */
-    private void enterClassicsMode() {
-        Config.haveCheat = false;
-        Config.CurrentGameMode = Constant.MODE_CLASSIC;
-        // 保存游戏模式
-        ConfigManager.putCurrentGameMode(this, Constant.MODE_CLASSIC);
-        titleDescribe.setText(getResources().getString(R.string.game_mode_classics));
-        // 读取到历史最高分
-        bestScores.setText(String.valueOf(Config.BestScore));
-        bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
-        currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
-        modeDescribe.setText(getResources().getString(R.string.tv_describe));
-        setTextStyle(titleDescribe);
-        gameView.initView(Constant.MODE_CLASSIC);
-
     }
 
     /**
@@ -463,45 +327,17 @@ public class GameActivity extends AppCompatActivity {
      * 配置对话框的确认按钮监听
      */
     private void onDialogConfirm() {
-        // 获取选择的难度和音效状态
-//        int difficulty = configDialog.getSelectDifficulty();
+        // 获取音效状态
         boolean volumeState = configDialog.getVolumeState();
-        // 若选择的难度与当前难度一样
-//        if (difficulty == Config.GRIDColumnCount) {
-            // 判断音效配置是否更改
             if (volumeState != Config.VolumeState) {
                 // 保存音效设置
                 ConfigManager.putGameVolume(this, volumeState);
                 Config.VolumeState = volumeState;
             }
             configDialog.cancel();
-/*            return;
-        }*/
-        //更改游戏配置
-        //changeConfiguration(configDialog, volumeState);
         Config.haveCheat = false;
     }
 
-    /**
-     * 更改游戏配置
-     * @param dialog 提示框对象
-     * @param difficulty 难度状态（0423删除）
-     * @param volumeState 音乐开关状态
-     */
-/*    private void changeConfiguration(ConfigDialog dialog, boolean volumeState) {
-//        Config.GRIDColumnCount = difficulty;
-        Config.VolumeState = volumeState;
-        gameView.initView(Constant.MODE_CLASSIC);
-        // 重置得分
-        currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
-        bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
-        bestScores.setText(String.valueOf(ConfigManager.getBestScore(this)));
-        // 保存游戏难度
-//        ConfigManager.putGameDifficulty(GameActivity.this, difficulty);
-        // 保存音效设置
-        ConfigManager.putGameVolume(this, volumeState);
-        dialog.cancel();
-    }*/
 
     /**
      * 记录得分
@@ -512,15 +348,6 @@ public class GameActivity extends AppCompatActivity {
         if (score > ConfigManager.getBestScore(this)) {
             updateBestScore(score);
         }
-/*        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
-            if (score > ConfigManager.getBestScore(this)) {
-                updateBestScore(score);
-            }
-        } else if (Config.CurrentGameMode == Constant.MODE_INFINITE) {
-            if (score > ConfigManager.getBestScoreWithinInfinite(this)) {
-                updateBestScore(score);
-            }
-        }*/
     }
 
     /**
@@ -530,13 +357,6 @@ public class GameActivity extends AppCompatActivity {
         bestScores.setText(String.valueOf(newScore));
         Config.BestScore = newScore;
         ConfigManager.putBestScore(this, newScore);
-/*        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
-            Config.BestScore = newScore;
-            ConfigManager.putBestScore(this, newScore);
-        } else if (Config.CurrentGameMode == Constant.MODE_INFINITE) {
-            Config.BestScoreWithinInfinite = newScore;
-            ConfigManager.putBestScoreWithinInfinite(this, newScore);
-        }*/
     }
 
 
@@ -557,8 +377,8 @@ public class GameActivity extends AppCompatActivity {
                 saveCurrentScore(score + historyScore);
                 recordScore(score + historyScore);
                 // 游戏结束
-            } else if (action.equals(GameView.ACTION_WIN)
-                    || action.equals(GameView.ACTION_LOSE)||action.equals("ACTION_LOSE_IN")||action.equals("ACTION_WIN_IN")) {
+            } else if (action.equals(GameView.ACTION_WIN_IN)
+                    ||action.equals(GameView.ACTION_LOSE_IN)) {
                 // 清除缓存
                 isNeedSave = false;
                 deleteCache(Config.getTableName());
@@ -570,10 +390,17 @@ public class GameActivity extends AppCompatActivity {
                 new Handler().postDelayed(() ->
                         dialog.setFinalScore(currentScores.getText().toString())
                                 .setTitle(result)
-                                .setOnShareClickListener(v -> share())//比较数据添加至排行榜
+                                .setEdit(action)
+                                .setOnShareClickListener(v -> {
+                                    isNeedSave = true;
+                                    dialog.addInfo(TimeUtils.getFormatHMS(Config.currentSecond));
+                                    Intent i = new Intent(GameActivity.this,LoginActivity.class);
+                                    Toast.makeText(GameActivity.this,"添加成功，返回主界面",Toast.LENGTH_SHORT).show();
+                                    startActivity(i);
+                                    finish();
+                                })
                                 .setOnGoOnClickListener(v -> {
-                                    // 清除缓存
-                                    // todo 改成返回主界面
+                                  /*  // 清除缓存
                                     isNeedSave = true;
                                     gameView.reset();
                                     deleteCache(Config.getTableName());
@@ -583,7 +410,45 @@ public class GameActivity extends AppCompatActivity {
                                     //重置时间04.23
                                     titleDescribe.setText(TimeUtils.getFormatHMS(0));
                                     resetTime(0);
+                                    dialog.cancel();*/
+
+                                    //返回主界面
+                                    isNeedSave = true;
+                                    Intent i = new Intent(GameActivity.this,LoginActivity.class);
+                                    startActivity(i);
                                     dialog.cancel();
+                                    finish();
+                                }).show(), 666);
+
+            }else if(action.equals(GameView.ACTION_WIN)
+                    || action.equals(GameView.ACTION_LOSE)){
+                // 清除缓存
+                isNeedSave = false;
+                deleteCache(Config.getTableName());
+                saveCurrentScore(0);
+
+                String result = intent.getStringExtra(GameView.KEY_RESULT);
+                GameOverDialog dialog = new GameOverDialog(GameActivity.this, R.style.CustomDialog);
+                dialog.setCancelable(false);
+                new Handler().postDelayed(() ->
+                        dialog.setFinalScore(currentScores.getText().toString())
+                                .setTitle(result)
+                                .setEdit(action)
+                                .setOnShareClickListener(v -> {
+                                    //返回主界面
+                                    isNeedSave = true;
+                                    Intent i = new Intent(GameActivity.this,LoginActivity.class);
+                                    startActivity(i);
+                                    dialog.cancel();
+                                    finish();
+                                })
+                                .setOnGoOnClickListener(v -> {
+                                    //返回主界面
+                                    isNeedSave = true;
+                                    Intent i = new Intent(GameActivity.this,LoginActivity.class);
+                                    startActivity(i);
+                                    dialog.cancel();
+                                    finish();
                                 }).show(), 666);
             }
         }
@@ -603,11 +468,6 @@ public class GameActivity extends AppCompatActivity {
      */
     private void saveCurrentScore(int score) {
         ConfigManager.putCurrentScore(GameActivity.this, score);
-/*        if (Config.CurrentGameMode == Constant.MODE_CLASSIC) {
-            ConfigManager.putCurrentScore(GameActivity.this, score);
-        } else {
-            ConfigManager.putCurrentScoreWithinInfinite(GameActivity.this, score);
-        }*/
     }
 
     /**
@@ -615,19 +475,6 @@ public class GameActivity extends AppCompatActivity {
      */
     private boolean isLightColor(int color) {
         return ColorUtils.calculateLuminance(color) >= 0.5;
-    }
-
-    /**
-     * 分享
-     * todo 改成加入排行榜
-     */
-    private void share() {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT,
-                getResources().getString(R.string.share, currentScores.getText().toString()));
-        shareIntent = Intent.createChooser(shareIntent, "分享到");
-        startActivity(shareIntent);
     }
 
     /**
