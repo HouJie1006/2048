@@ -256,6 +256,8 @@ public class GameActivity extends AppCompatActivity {
         filter.addAction(GameView.ACTION_RECORD_SCORE);
         filter.addAction(GameView.ACTION_WIN);
         filter.addAction(GameView.ACTION_LOSE);
+        filter.addAction("ACTION_WIN_IN");
+        filter.addAction("ACTION_LOSE_IN");
         registerReceiver(myReceiver, filter);
 
         // 重置按钮，重新开始游戏
@@ -556,7 +558,7 @@ public class GameActivity extends AppCompatActivity {
                 recordScore(score + historyScore);
                 // 游戏结束
             } else if (action.equals(GameView.ACTION_WIN)
-                    || action.equals(GameView.ACTION_LOSE)) {
+                    || action.equals(GameView.ACTION_LOSE)||action.equals("ACTION_LOSE_IN")||action.equals("ACTION_WIN_IN")) {
                 // 清除缓存
                 isNeedSave = false;
                 deleteCache(Config.getTableName());

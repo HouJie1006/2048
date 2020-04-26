@@ -15,7 +15,7 @@
         android:layout_marginTop="36dp"
         android:fitsSystemWindows="true"
         android:textColor="@color/colorAccent"
-        android:textSize="64sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

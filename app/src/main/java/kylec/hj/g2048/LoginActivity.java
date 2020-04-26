@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 import kylec.hj.g2048.app.Constant;
+import kylec.hj.g2048.view.GameOverDialog;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button startGame;
     private Button continue_btn;
+    private Button game_Info;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
@@ -28,6 +30,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startGame.setOnClickListener(this);
         continue_btn =findViewById(R.id.continue_btn);
         continue_btn.setOnClickListener(this);
+        game_Info = findViewById(R.id.gameInfo);
+        game_Info.setOnClickListener(this);
+
     }
 
     @Override
@@ -42,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent continueGame = new Intent(this,GameActivity.class);
                 continueGame.putExtra("gameStatus", Constant.GAME_CONTINUE);
                 startActivity(continueGame);
+                break;
+            case R.id.gameInfo:
+                break;
         }
     }
 }

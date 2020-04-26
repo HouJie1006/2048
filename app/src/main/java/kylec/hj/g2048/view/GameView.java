@@ -719,7 +719,7 @@ public class GameView extends GridLayout {
         }
 
         // 经典模式下才判赢
-        if (gameMode == 0) {
+//        if (gameMode == 0) {
             // 判断是否达成游戏目标
             for (int i = 0; i < gridColumnCount; i++) {
                 for (int j = 0; j < gridColumnCount; j++) {
@@ -743,7 +743,7 @@ public class GameView extends GridLayout {
                     }
                 }
             }
-        }
+//        }
     }
 
     private List<Gamer> getList(){
@@ -775,6 +775,10 @@ public class GameView extends GridLayout {
         Intent intent = new Intent(action);
         if (action.equals(ACTION_WIN)) {
             intent.putExtra(KEY_RESULT, "You Win!");
+        }else if (action.equals("ACTION_WIN_IN")){
+            intent.putExtra(KEY_RESULT, "You Win and Input!");
+        }else if (action.equals("ACTION_LOSE_IN")){
+            intent.putExtra(KEY_RESULT, "You Lose but Input!");
         } else {
             intent.putExtra(KEY_RESULT, "You Lose!");
         }
