@@ -37,19 +37,11 @@ public class GameOverDialog extends BaseDialog {
 
     private Context friendContext;
     private Context mContext;
-    private GameDatabaseHelper helper;
 
     public GameOverDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
         this.mContext = context;
-        //创建数据库
-        try {
-            friendContext = mContext.createPackageContext("com.hj.datafor2048"
-                    ,Context.CONTEXT_IGNORE_SECURITY);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        helper = new GameDatabaseHelper(friendContext, Constant.DB_NAME,null,1);
+
     }
 
     @Override
@@ -62,7 +54,6 @@ public class GameOverDialog extends BaseDialog {
         init();
     }
 
-    // todo 增加保存到数据库的操作
     private void init() {
         TextView title = findViewById(R.id.tv_custom_title);
         TextView finalScore = findViewById(R.id.tv_final_score);
@@ -130,6 +121,14 @@ public class GameOverDialog extends BaseDialog {
     }
 
     public void addInfo(String gameTime){
+        //创建数据库
+        try {
+            friendContext = mContext.createPackageContext("com.hj.datafor2048"
+                    ,Context.CONTEXT_IGNORE_SECURITY);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        GameDatabaseHelper helper = new GameDatabaseHelper(friendContext, Constant.DB_NAME,null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("user_name",info.getText().toString());

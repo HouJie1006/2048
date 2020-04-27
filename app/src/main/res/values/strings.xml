@@ -39,4 +39,8 @@
     <string name="start_charts">排行榜</string>
     <string name="game_info">游戏攻略</string>
     <string name="dialog_hint">输入您的姓名，加入排行榜</string>
+    <string name="index">排名</string>
+    <string name="name">用户名</string>
+    <string name="score">分数</string>
+    <string name="time">时间</string>
 </resources>

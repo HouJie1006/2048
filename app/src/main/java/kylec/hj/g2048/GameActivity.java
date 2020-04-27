@@ -257,8 +257,8 @@ public class GameActivity extends AppCompatActivity {
         filter.addAction(GameView.ACTION_RECORD_SCORE);
         filter.addAction(GameView.ACTION_WIN);
         filter.addAction(GameView.ACTION_LOSE);
-        filter.addAction("ACTION_WIN_IN");
-        filter.addAction("ACTION_LOSE_IN");
+        filter.addAction(GameView.ACTION_WIN_IN);
+        filter.addAction(GameView.ACTION_LOSE_IN);
         registerReceiver(myReceiver, filter);
 
         // 重置按钮，重新开始游戏

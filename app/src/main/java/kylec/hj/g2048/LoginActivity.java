@@ -16,6 +16,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button startGame;
     private Button continue_btn;
     private Button game_Info;
+    private Button charts;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
@@ -28,10 +29,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         startGame = findViewById(R.id.startGame);
         startGame.setOnClickListener(this);
-        continue_btn =findViewById(R.id.continue_btn);
+        continue_btn = findViewById(R.id.continue_btn);
         continue_btn.setOnClickListener(this);
         game_Info = findViewById(R.id.gameInfo);
         game_Info.setOnClickListener(this);
+        charts = findViewById(R.id.startCharts);
+        charts.setOnClickListener(this);
 
     }
 
@@ -49,6 +52,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(continueGame);
                 break;
             case R.id.gameInfo:
+                break;
+            case R.id.startCharts:
+                Intent startCharts = new Intent(this,ChartsActivity.class);
+                startActivity(startCharts);
                 break;
         }
     }
