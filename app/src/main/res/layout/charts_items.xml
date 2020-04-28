@@ -21,7 +21,7 @@
         android:textSize="20sp"
         android:text="2048"
         android:id="@+id/gamer_name"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content" />
@@ -31,7 +31,7 @@
         android:textSize="20sp"
         android:text="789"
         android:id="@+id/gamer_score"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
@@ -41,7 +41,7 @@
         android:textSize="20sp"
         android:text="@string/time"
         android:id="@+id/gamer_time"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>

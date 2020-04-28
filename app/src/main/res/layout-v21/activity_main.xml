@@ -146,18 +146,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.24" />
 
-    <TextView
-        android:id="@+id/tv_mode_describe"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/tv_describe"
-        android:textColor="@color/colorTheme"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <kylec.hj.g2048.view.GameView
         android:id="@+id/game_view"
@@ -169,25 +157,7 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mode_describe" />
-
-    <!--Android:gestureStrokeAngleThreshold
-       一笔必须包含的最小曲线度
-       不设置无法直接识别竖直手势-->
-    <android.gesture.GestureOverlayView
-        android:id="@+id/gesture_overlay_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:fadeOffset="666"
-        android:gestureColor="@android:color/transparent"
-        android:gestureStrokeAngleThreshold="160"
-        android:gestureStrokeType="multiple"
-        android:uncertainGestureColor="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_reset"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_view" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <ImageView
         android:id="@+id/iv_show_cheat"

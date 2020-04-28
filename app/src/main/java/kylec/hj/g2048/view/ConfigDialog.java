@@ -49,9 +49,8 @@ public class ConfigDialog extends BaseDialog {
     private void init() {
         Button cancel = findViewById(R.id.btn_return);
         Button confirm = findViewById(R.id.btn_confirm);
-        Button difficulty4 = findViewById(R.id.btn_difficulty_4);
-        Button difficulty5 = findViewById(R.id.btn_difficulty_5);
-        Button difficulty6 = findViewById(R.id.btn_difficulty_6);
+        Button difficulty4 = findViewById(R.id.btn_Chinese);
+        Button difficulty5 = findViewById(R.id.btn_English);
         Button volumeON = findViewById(R.id.btn_volume_on);
         Button volumeOFF = findViewById(R.id.btn_volume_off);
         TextView getGoalTime = findViewById(R.id.tv_goal_get_time);
@@ -115,15 +114,6 @@ public class ConfigDialog extends BaseDialog {
             volumeOFF.setBackgroundResource(R.drawable.bg_button_select);
         });
         getGoalTime.setText(Config.GetGoalTime == 0 ? "暂未达成" : String.valueOf(Config.GetGoalTime));
-/*        // 无限模式下游戏难度不可设置
-        if (Config.CurrentGameMode == 1) {
-            difficulty4.setBackgroundResource(R.drawable.bg_button_useless);
-            difficulty5.setBackgroundResource(R.drawable.bg_button_useless);
-            difficulty6.setBackgroundResource(R.drawable.bg_button_useless);
-            difficulty4.setEnabled(false);
-            difficulty5.setEnabled(false);
-            difficulty6.setEnabled(false);
-        }*/
     }
 
     /**

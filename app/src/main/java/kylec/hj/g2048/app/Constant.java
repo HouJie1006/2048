@@ -9,16 +9,6 @@ public class Constant {
 
     static final String TABLE_NAME_4 = "G4";
 
-    static final String TABLE_NAME_5 = "G5";
-
-    static final String TABLE_NAME_6 = "G6";
-
-    static final String TABLE_NAME_INFINITE = "G_INFINITE";
-
-    public static final int MODE_CLASSIC = 0;
-
-    public static final int MODE_INFINITE = 1;
-
     public static final String GAME_START = "0";
 
     public static final String GAME_CONTINUE = "1";

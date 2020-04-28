@@ -47,19 +47,15 @@ import kylec.hj.g2048.view.GameOverDialog;
 import kylec.hj.g2048.view.GameView;
 
 /**
- * Created by KYLE on 2018/10/2
+ * 游戏界面
  */
 public class GameActivity extends AppCompatActivity {
-
-    public static final String KEY_CHEAT = "开挂";
-    public static final int KEY_MATCH_SCORE = 3;
 
     private TextView currentScores;
     private TextView bestScores;
     private TextView bestScoresRank;
     private TextView titleDescribe;
     private TextView tvTitle;
-    private TextView modeDescribe;
     private Button reset;
     private Button menu;
     private ImageView cheatStar;
@@ -67,7 +63,6 @@ public class GameActivity extends AppCompatActivity {
 
     private BroadcastReceiver myReceiver;
     private ConfigDialog configDialog;
-    private GestureOverlayView mGestureOverlayView;
 
     private GameDatabaseHelper gameDatabaseHelper;
     private SQLiteDatabase db;
@@ -80,10 +75,6 @@ public class GameActivity extends AppCompatActivity {
     private Timer gameTime;
     private boolean isPause = false;
 
-/*    public static void start(Context context) {
-        Intent starter = new Intent(context, GameActivity.class);
-        context.startActivity(starter);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +85,10 @@ public class GameActivity extends AppCompatActivity {
         initView(data);
         initData();
         getTime();
-//        initGesture();
     }
 
     /**
      * 游戏计时器
-     * 04.22
      */
     private void getTime(){
         @SuppressLint("HandlerLeak")
@@ -175,8 +164,6 @@ public class GameActivity extends AppCompatActivity {
             unregisterReceiver(myReceiver);
             myReceiver = null;
         }
-        // 移除监听器
-        mGestureOverlayView.removeAllOnGestureListeners();
 
         if (null != timer) {
             timer.cancel();
@@ -216,8 +203,6 @@ public class GameActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tv_title);
         reset = findViewById(R.id.btn_reset);
         menu = findViewById(R.id.btn_option);
-        mGestureOverlayView = findViewById(R.id.gesture_overlay_view);
-        modeDescribe = findViewById(R.id.tv_mode_describe);
         cheatStar = findViewById(R.id.iv_show_cheat);
         gameView = findViewById(R.id.game_view);
 
@@ -233,14 +218,15 @@ public class GameActivity extends AppCompatActivity {
             //重置时间04.24
             titleDescribe.setText(TimeUtils.getFormatHMS(0));
             resetTime(0);
-            gameView.initView(Constant.MODE_CLASSIC);
+            //加载游戏界面
+            gameView.initView();
         } else if (gameStatus.equals("1")){
             Config.gameStatus = gameStatus;
             //继续游戏
             bestScores.setText(String.valueOf(Config.BestScore));
             bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
             currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
-            gameView.initView(Constant.MODE_CLASSIC);
+            gameView.initView();
 
         }
         setTextStyle(tvTitle);
@@ -300,7 +286,6 @@ public class GameActivity extends AppCompatActivity {
                 .setMessage(getResources().getString(R.string.tip_reset_btn))
                 .setOnNegativeClickListener("", v -> dialog.cancel())
                 .setOnPositiveClickedListener("", v -> {
-                    Config.haveCheat = false;
                     gameView.resetGame();
                     // 重置分数
                     currentScores.setText("0");
@@ -335,7 +320,6 @@ public class GameActivity extends AppCompatActivity {
                 Config.VolumeState = volumeState;
             }
             configDialog.cancel();
-        Config.haveCheat = false;
     }
 
 
@@ -471,13 +455,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
-     * 判断颜色是否是亮色
-     */
-    private boolean isLightColor(int color) {
-        return ColorUtils.calculateLuminance(color) >= 0.5;
-    }
-
-    /**
      * 退出游戏时自动保存当前进度
      */
     @Override
@@ -496,10 +473,12 @@ public class GameActivity extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * 保存格子位置坐标和格子内容
+     */
     private void saveGameProgress() {
         String tableName = Config.getTableName();
         deleteCache(tableName);
-        // 保存新的数据
         ArrayList<CellEntity> data = gameView.getCurrentProcess();
         if (data.size() >= 2) {
             ContentValues values = new ContentValues();
@@ -518,6 +497,13 @@ public class GameActivity extends AppCompatActivity {
      */
     private void deleteCache(String tableName) {
         db.execSQL("delete from " + tableName);
+    }
+
+    /**
+     * 判断颜色是否是亮色
+     */
+    private boolean isLightColor(int color) {
+        return ColorUtils.calculateLuminance(color) >= 0.5;
     }
 
 }

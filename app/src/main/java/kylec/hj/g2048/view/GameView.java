@@ -65,6 +65,10 @@ public class GameView extends GridLayout {
     private Cell[][] cells;
 
     /**
+     * 记录滑动前的一行(列)上的数字
+     */
+    private ArrayList<Integer> someData = new ArrayList<>();
+    /**
      * 滑动后每行(列)的数据
      */
     private List<Integer> dataAfterSwipe = new ArrayList<>();
@@ -80,28 +84,19 @@ public class GameView extends GridLayout {
     private int recordPreviousDigital = -1;
 
     /**
-     * 记录滑动前的一行(列)上的数字
+     * 标识是否可以滑动
      */
-    private ArrayList<Integer> someData = new ArrayList<>();
+    private boolean canSwipe;
 
     private SoundPool mSoundPool;
 
     private int soundID;
 
-    /**
-     * 标识是否可以滑动
-     */
-    private boolean canSwipe;
 
     /**
      * 每行(列)方格数
      */
     private int gridColumnCount;
-
-    /**
-     * 游戏模式
-     */
-    public int gameMode;
 
     public String gameStatus = "0";
 
@@ -132,23 +127,15 @@ public class GameView extends GridLayout {
     }
 
     /**
-     * @param mode 游戏模式 0：经典 1：无限
-     *             todo 只留4*4模式
+     * 游戏界面初始化
      */
     @SuppressLint("ClickableViewAccessibility")
-    public void initView(int mode) {
-        gameMode = mode;
+    public void initView() {
         canSwipe = true;
         // 移除所有视图，以便更改游戏难度
         removeAllViews();
         // 初始化格子
-        if (mode == Constant.MODE_CLASSIC) {
-            // 经典模式
-            gridColumnCount = Config.GRIDColumnCount;
-        } else if (mode == Constant.MODE_INFINITE) {
-            // 无限模式
-            gridColumnCount = 6;
-        }
+        gridColumnCount = Config.GRIDColumnCount;
         cells = new Cell[gridColumnCount][gridColumnCount];
         // 设置界面大小
         setColumnCount(gridColumnCount);
@@ -263,7 +250,10 @@ public class GameView extends GridLayout {
             }
         }
     }
-    // todo 加入判断是重新开始（不查询直接删除数据内容开始），还是继续
+
+    /**
+     * 通过gameStatus判断游戏状态，0：重新开始，1：获取游戏进度继续
+     */
     private void startGame() {
         gameStatus = Config.gameStatus;
         if (gameStatus.equals("1")){
@@ -296,8 +286,8 @@ public class GameView extends GridLayout {
     }
 
     private void initGame() {
-        addDigital(false);
-        addDigital(false);
+        addDigital();
+        addDigital();
     }
 
     /**
@@ -317,8 +307,8 @@ public class GameView extends GridLayout {
     public void resetGame() {
         reset();
         // 随机添加两个数字（2或4）
-        addDigital(false);
-        addDigital(false);
+        addDigital();
+        addDigital();
     }
 
     /**
@@ -334,20 +324,14 @@ public class GameView extends GridLayout {
 
     /**
      * 添加随机数字（2或4）或直接添加一个1024
-     *
-     * @param isCheat 是否是开挂
      */
-    public void addDigital(boolean isCheat) {
+    public void addDigital() {
         getEmptyCell();
         if (emptyCellPoint.size() > 0) {
             // 随机取出一个空格子的坐标位置
             Point point = emptyCellPoint.get((int) (Math.random() * emptyCellPoint.size()));
-            if (isCheat) {
-                cells[point.x][point.y].setDigital(1024);
-            } else {
-                // 通过坐标位置获取到此空格子并以4:6的概率随机设置一个2或4
-                cells[point.x][point.y].setDigital(Math.random() > 0.4 ? 2 : 4);
-            }
+            // 通过坐标位置获取到此空格子并以4:6的概率随机设置一个2或4
+            cells[point.x][point.y].setDigital(Math.random() > 0.4 ? 2 : 4);
             // 设置动画
             setAppearAnim(cells[point.x][point.y]);
         }
@@ -461,7 +445,7 @@ public class GameView extends GridLayout {
         }
         if (needAddDigital) {
             // 添加一个随机数字（2或4）
-            addDigital(false);
+            addDigital();
             playSound();
         }
         judgeOverOrAccomplish();
@@ -527,7 +511,7 @@ public class GameView extends GridLayout {
         }
         if (needAddDigital) {
             // 添加一个随机数字（2或4）
-            addDigital(false);
+            addDigital();
             playSound();
         }
         judgeOverOrAccomplish();
@@ -591,7 +575,7 @@ public class GameView extends GridLayout {
         }
         if (needAddDigital) {
             // 添加一个随机数字（2或4）
-            addDigital(false);
+            addDigital();
             playSound();
         }
         judgeOverOrAccomplish();
@@ -658,7 +642,7 @@ public class GameView extends GridLayout {
         }
         if (needAddDigital) {
             // 添加一个随机数字（2或4）
-            addDigital(false);
+            addDigital();
             playSound();
         }
         judgeOverOrAccomplish();
@@ -711,41 +695,38 @@ public class GameView extends GridLayout {
             if (gamers.size() == 10){
                 Gamer gamer = gamers.get(gamers.size() - 1);
                 if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
-                    sendGameOverMsg("ACTION_LOSE_IN");
+                    sendGameOverMsg(ACTION_LOSE_IN);
                 }else {
                     sendGameOverMsg(ACTION_LOSE);
                 }
             }else if (gamers.size() < 10){
-                sendGameOverMsg("ACTION_LOSE_IN");
+                sendGameOverMsg(ACTION_LOSE_IN);
             }
         }
 
-        // 经典模式下才判赢
-//        if (gameMode == 0) {
-            // 判断是否达成游戏目标
-            for (int i = 0; i < gridColumnCount; i++) {
-                for (int j = 0; j < gridColumnCount; j++) {
-                    // 有一个格子数字到达2048则视为达成目标
-                    if (cells[i][j].getDigital() == 2048) {
-                        int currentTime = ConfigManager.getGoalTime(getContext()) + 1;
-                        ConfigManager.putGoalTime(getContext(), currentTime);
-                        Config.GetGoalTime = currentTime;
+        // 判断是否达成游戏目标
+        for (int i = 0; i < gridColumnCount; i++) {
+            for (int j = 0; j < gridColumnCount; j++) {
+                // 有一个格子数字到达2048则视为达成目标
+                if (cells[i][j].getDigital() == 2048) {
+                    int currentTime = ConfigManager.getGoalTime(getContext()) + 1;
+                    ConfigManager.putGoalTime(getContext(), currentTime);
+                    Config.GetGoalTime = currentTime;
 
-                        if (gamers.size() == 10){
-                            Gamer gamer = gamers.get(gamers.size() - 1);
-                            if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
-                                sendGameOverMsg("ACTION_WIN_IN");
-                            }else {
-                                sendGameOverMsg(ACTION_WIN);
-                            }
-                        }else if (gamers.size() < 10){
-                            sendGameOverMsg("ACTION_WIN_IN");
+                    if (gamers.size() == 10){
+                        Gamer gamer = gamers.get(gamers.size() - 1);
+                        if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
+                            sendGameOverMsg(ACTION_WIN_IN);
+                        }else {
+                            sendGameOverMsg(ACTION_WIN);
                         }
-
+                    }else if (gamers.size() < 10){
+                        sendGameOverMsg(ACTION_WIN_IN);
                     }
+
                 }
             }
-//        }
+        }
     }
 
     private List<Gamer> getList(){

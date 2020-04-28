@@ -2,9 +2,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:background="@color/colorTheme"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_charts_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/charts_return"
+            android:layout_width="42dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/bg_button_white"
+            android:fitsSystemWindows="true"
+            android:text="@string/btn_back" />
+
+        <TextView
+            android:id="@+id/charts_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:layout_toStartOf="@+id/charts_confirm"
+            android:layout_toLeftOf="@+id/charts_confirm"
+            android:layout_toEndOf="@+id/charts_return"
+            android:layout_toRightOf="@+id/charts_return"
+            android:fitsSystemWindows="true"
+            android:gravity="center_horizontal"
+            android:text="@string/charts"
+            android:textColor="@color/colorWhite"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/charts_confirm"
+            android:layout_width="42dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/bg_button_white"
+            android:fitsSystemWindows="true"
+            android:visibility="invisible"
+            android:text="@string/btn_confirm" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.36dp"
+            android:layout_below="@+id/charts_title"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/white" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -23,7 +83,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:text="@string/name"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
@@ -32,7 +92,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:text="@string/score"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -41,7 +101,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:text="@string/time"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>

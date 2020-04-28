@@ -5,10 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +21,16 @@ import kylec.hj.g2048.adapter.ChartsAdapter;
 import kylec.hj.g2048.app.Constant;
 import kylec.hj.g2048.db.GameDatabaseHelper;
 import kylec.hj.g2048.db.Gamer;
+import kylec.hj.g2048.view.CommonDialog;
 
+/**
+ * 排行榜界面
+ */
 public class ChartsActivity extends AppCompatActivity {
 
     List<Gamer> mGamer = new ArrayList<>();
     private Context friendContext;
+    private ChartsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +40,21 @@ public class ChartsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycle_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        ChartsAdapter adapter = new ChartsAdapter(mGamer);
+        adapter = new ChartsAdapter(mGamer);
         recyclerView.setAdapter(adapter);
+
+        Button chartsReturn = findViewById(R.id.charts_return);
+        chartsReturn.setOnClickListener(view -> {
+            Intent i = new Intent(this,LoginActivity.class);
+            startActivity(i);
+            finish();
+        });
+
     }
 
+    /**
+     * 获取数据库的排行信息
+     */
     public void getData(){
         try {
             friendContext = this.createPackageContext("com.hj.datafor2048"

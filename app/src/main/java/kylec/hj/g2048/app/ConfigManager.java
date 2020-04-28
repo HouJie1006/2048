@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 /**
  * 保存配置工具
  * 用SharedPreferences保存
- * <p>
- * Created by KYLE on 2018/10/4
  */
 public class ConfigManager {
 
@@ -31,68 +29,29 @@ public class ConfigManager {
 
     /**
      * 保存最高分
-     * todo(只留4*4)
      */
     public static void putBestScore(Context context, int bestScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
                 Config.SAVE_BEST_SCORE, Context.MODE_PRIVATE).edit();
         editor.putInt(Config.KEY_BEST_SCORE_WITHIN_4, bestScore).apply();
-/*        switch (Config.GRIDColumnCount) {
-            case 4:// 难度4
-                editor.putInt(Config.KEY_BEST_SCORE_WITHIN_4, bestScore).apply();
-                break;
-            case 5:// 难度5
-                editor.putInt(Config.KEY_BEST_SCORE_WITHIN_5, bestScore).apply();
-                break;
-            case 6:// 难度6
-                editor.putInt(Config.KEY_BEST_SCORE_WITHIN_6, bestScore).apply();
-                break;
-            default:
-                break;
-        }*/
     }
 
     /**
      * 获取最高分
-     * todo(只留4*4)
      */
     public static int getBestScore(Context context) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Config.SAVE_BEST_SCORE, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_4, 0);
-/*        switch (Config.GRIDColumnCount) {
-            case 4:// 难度4
-                return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_4, 0);
-            case 5:// 难度5
-                return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_5, 0);
-            case 6:// 难度6
-                return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_6, 0);
-            default:
-                return 0;
-        }*/
     }
 
     /**
      * 保存当前得分
-     * todo(只留4*4)
      */
     public static void putCurrentScore(Context context, int currentScore) {
         SharedPreferences.Editor editor = context.getSharedPreferences(
                 Config.SAVE_CURRENT_SCORE, Context.MODE_PRIVATE).edit();
         editor.putInt("KEY_CURRENT_SCORE_4", currentScore).apply();
-/*        switch (Config.GRIDColumnCount) {
-            case 4:// 难度4
-                editor.putInt("KEY_CURRENT_SCORE_4", currentScore).apply();
-                break;
-            case 5:// 难度5
-                editor.putInt("KEY_CURRENT_SCORE_5", currentScore).apply();
-                break;
-            case 6:// 难度6
-                editor.putInt("KEY_CURRENT_SCORE_6", currentScore).apply();
-                break;
-            default:
-                break;
-        }*/
     }
 
     /**
@@ -102,76 +61,6 @@ public class ConfigManager {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Config.SAVE_CURRENT_SCORE, Context.MODE_PRIVATE);
         return sharedPreferences.getInt("KEY_CURRENT_SCORE_4", 0);
-/*        switch (Config.GRIDColumnCount) {
-            case 4:// 难度4
-                return sharedPreferences.getInt("KEY_CURRENT_SCORE_4", 0);
-            case 5:// 难度5
-                return sharedPreferences.getInt("KEY_CURRENT_SCORE_5", 0);
-            case 6:// 难度6
-                return sharedPreferences.getInt("KEY_CURRENT_SCORE_6", 0);
-            default:
-                return 0;
-        }*/
-    }
-
-    /**
-     * 保存无限模式下最高分
-     * todo(无限模式删除)
-     */
-    public static void putBestScoreWithinInfinite(Context context, int bestScore) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(
-                Config.SAVE_BEST_SCORE, Context.MODE_PRIVATE).edit();
-        editor.putInt(Config.KEY_BEST_SCORE_WITHIN_INFINITE, bestScore).apply();
-    }
-
-    /**
-     * 获取无限模式下最高分
-     * todo(无限模式删除)
-     */
-    public static int getBestScoreWithinInfinite(Context context) {
-        SharedPreferences sharedPreferences =
-                context.getSharedPreferences(Config.SAVE_BEST_SCORE, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(Config.KEY_BEST_SCORE_WITHIN_INFINITE, 0);
-    }
-
-    /**
-     * 保存当前无限模式分数
-     * todo(无限模式删除)
-     */
-    public static void putCurrentScoreWithinInfinite(Context context, int currentScore) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(
-                Config.SAVE_CURRENT_SCORE_INFINITE, Context.MODE_PRIVATE).edit();
-        editor.putInt("KEY_CURRENT_SCORE_INFINITE", currentScore).apply();
-    }
-
-    /**
-     * 获取当前无限模式分数
-     * todo(无限模式删除)
-     */
-    public static int getCurrentScoreWithinInfinite(Context context) {
-        SharedPreferences sharedPreferences =
-                context.getSharedPreferences(Config.SAVE_CURRENT_SCORE_INFINITE, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt("KEY_CURRENT_SCORE_INFINITE", 0);
-    }
-
-    /**
-     * 保存游戏难度
-     * todo(删除，使用默认4*4)
-     */
-    public static void putGameDifficulty(Context context, int difficulty) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(
-                Config.SAVE_GAME_DIFFICULTY, Context.MODE_PRIVATE).edit();
-        editor.putInt(Config.KEY_GAME_DIFFICULTY, difficulty).apply();
-    }
-
-    /**
-     * 获取游戏难度
-     * todo(删除，使用默认4*4)
-     */
-    static int getGameDifficulty(Context context) {
-        SharedPreferences sharedPreferences =
-                context.getSharedPreferences(Config.SAVE_GAME_DIFFICULTY, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(Config.KEY_GAME_DIFFICULTY, 4);
     }
 
     /**
@@ -210,24 +99,8 @@ public class ConfigManager {
         return sharedPreferences.getInt(Config.KEY_GET_GOAL_TIME, 0);
     }
 
-    /**
-     * 保存游戏模式
-     * todo(删除，使用默认4*4)
-     */
-    public static void putCurrentGameMode(Context context, int mode) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(
-                Config.SAVE_CURRENT_GAME_MODE, Context.MODE_PRIVATE).edit();
-        editor.putInt(Config.KEY_CURRENT_GAME_MOE, mode).apply();
-    }
 
-    /**
-     * 获取游戏模式
-     * todo(删除，使用默认4*4)
-     */
-    static int getCurrentGameMode(Context context) {
-        SharedPreferences sharedPreferences =
-                context.getSharedPreferences(Config.SAVE_CURRENT_GAME_MODE, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(Config.KEY_CURRENT_GAME_MOE, 0);
-    }
+
+
 
 }
