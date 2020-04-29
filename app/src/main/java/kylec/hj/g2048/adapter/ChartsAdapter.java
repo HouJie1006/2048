@@ -69,7 +69,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Gamer gamer = mGamer.get(position);
-        holder.index.setText(String.valueOf(gamer.getId()));
+        holder.index.setText(String.valueOf(position+1));
         holder.score.setText(String.valueOf(gamer.getScore()));
         holder.name.setText(gamer.getName());
         holder.time.setText(gamer.getTime());

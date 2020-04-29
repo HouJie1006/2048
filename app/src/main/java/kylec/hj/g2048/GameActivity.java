@@ -56,9 +56,9 @@ public class GameActivity extends AppCompatActivity {
     private TextView bestScoresRank;
     private TextView titleDescribe;
     private TextView tvTitle;
-    private Button reset;
     private Button menu;
-    private ImageView cheatStar;
+    private Button reset;
+    private Button back;
     private GameView gameView;
 
     private BroadcastReceiver myReceiver;
@@ -202,9 +202,9 @@ public class GameActivity extends AppCompatActivity {
         bestScoresRank = findViewById(R.id.tv_best_score_rank);
         titleDescribe = findViewById(R.id.tv_title_describe);
         tvTitle = findViewById(R.id.tv_title);
-        reset = findViewById(R.id.btn_reset);
         menu = findViewById(R.id.btn_option);
-        cheatStar = findViewById(R.id.iv_show_cheat);
+        reset = findViewById(R.id.btn_reset);
+        back = findViewById(R.id.btn_back);
         gameView = findViewById(R.id.game_view);
 
 
@@ -252,6 +252,8 @@ public class GameActivity extends AppCompatActivity {
         reset.setOnClickListener(v -> showConfirmDialog());
         // 打开菜单
         menu.setOnClickListener(v -> showConfigDialog());
+        //返回登入界面
+        back.setOnClickListener(v-> onBackPressed());
         //共享DataFor2048的数据库（0423）
         try {
             friendContext = this.createPackageContext("com.hj.datafor2048"
