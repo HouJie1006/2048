@@ -179,6 +179,7 @@ public class GameActivity extends AppCompatActivity {
             gameTime.purge();
             gameTime = null;
         }
+
         super.onDestroy();
     }
 
@@ -349,6 +350,8 @@ public class GameActivity extends AppCompatActivity {
      */
     private class MyReceiver extends BroadcastReceiver {
 
+
+
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -381,6 +384,7 @@ public class GameActivity extends AppCompatActivity {
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
                                     Toast.makeText(GameActivity.this,"添加成功，返回主界面",Toast.LENGTH_SHORT).show();
                                     startActivity(i);
+                                    dialog.cancel();
                                     finish();
                                 })
                                 .setOnGoOnClickListener(v -> {
@@ -461,15 +465,16 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         CommonDialog dialog = new CommonDialog(this, R.style.CustomDialog);
         dialog.setCancelable(false);
-        dialog.setTitle("确认退出")
+        dialog.setTitle(getResources().getString(R.string.go_back))
                 .setMessage("")
-                .setOnNegativeClickListener("狠心离开",
+                .setOnNegativeClickListener(getResources().getString(R.string.back),
                         v -> {
                             saveGameProgress();
+                            dialog.cancel();
                             finish();
 
                         })
-                .setOnPositiveClickedListener("我还要玩一会", v -> dialog.cancel())
+                .setOnPositiveClickedListener(getResources().getString(R.string.waite), v -> dialog.cancel())
                 .show();
     }
 

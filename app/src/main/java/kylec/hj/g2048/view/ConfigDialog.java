@@ -23,11 +23,6 @@ public class ConfigDialog extends BaseDialog {
     private View.OnClickListener onNegativeClickListener;
 
     /**
-     * 游戏难度
-     */
-    private int difficulty = Config.GRIDColumnCount;
-
-    /**
      * 游戏音效状态
      */
     private boolean volumeState = Config.VolumeState;
@@ -49,28 +44,10 @@ public class ConfigDialog extends BaseDialog {
     private void init() {
         Button cancel = findViewById(R.id.btn_return);
         Button confirm = findViewById(R.id.btn_confirm);
-        Button difficulty4 = findViewById(R.id.btn_Chinese);
-        Button difficulty5 = findViewById(R.id.btn_English);
         Button volumeON = findViewById(R.id.btn_volume_on);
         Button volumeOFF = findViewById(R.id.btn_volume_off);
         TextView getGoalTime = findViewById(R.id.tv_goal_get_time);
-/*        // 根据游戏难度选中按钮
-        switch (Config.GRIDColumnCount) {
-            case 4:
-                difficulty4.setBackgroundResource(R.drawable.bg_button_select);
-                difficulty = 4;
-                break;
-            case 5:
-                difficulty5.setBackgroundResource(R.drawable.bg_button_select);
-                difficulty = 5;
-                break;
-            case 6:
-                difficulty6.setBackgroundResource(R.drawable.bg_button_select);
-                difficulty = 6;
-                break;
-            default:
-                break;
-        }*/
+
         // 根据配置参数选中音效按钮
         if (Config.VolumeState) {
             volumeON.setBackgroundResource(R.drawable.bg_button_select);
@@ -85,24 +62,6 @@ public class ConfigDialog extends BaseDialog {
             confirm.setOnClickListener(onPositiveClickListener);
         }
 
-/*        difficulty4.setOnClickListener(v -> {
-            difficulty = 4;
-            difficulty4.setBackgroundResource(R.drawable.bg_button_select);
-            difficulty5.setBackgroundResource(R.drawable.bg_button_white);
-            difficulty6.setBackgroundResource(R.drawable.bg_button_white);
-        });
-        difficulty5.setOnClickListener(v -> {
-            difficulty = 5;
-            difficulty4.setBackgroundResource(R.drawable.bg_button_white);
-            difficulty5.setBackgroundResource(R.drawable.bg_button_select);
-            difficulty6.setBackgroundResource(R.drawable.bg_button_white);
-        });
-        difficulty6.setOnClickListener(v -> {
-            difficulty = 6;
-            difficulty4.setBackgroundResource(R.drawable.bg_button_white);
-            difficulty5.setBackgroundResource(R.drawable.bg_button_white);
-            difficulty6.setBackgroundResource(R.drawable.bg_button_select);
-        });*/
         volumeON.setOnClickListener(v -> {
             volumeState = true;
             volumeON.setBackgroundResource(R.drawable.bg_button_select);
@@ -134,12 +93,6 @@ public class ConfigDialog extends BaseDialog {
         return this;
     }
 
-    /**
-     * 获取选择的游戏难度
-     */
-    public int getSelectDifficulty() {
-        return difficulty;
-    }
 
     /**
      * 获取游戏音效状态

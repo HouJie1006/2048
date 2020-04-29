@@ -9,14 +9,12 @@
     <string name="tv_configuration_option">参数配置</string>
     <string name="btn_confirm">确认</string>
     <string name="btn_cancel">取消</string>
-    <string name="tv_game_language">游戏语言</string>
     <string name="btn_back">返回</string>
-    <string name="btn_Chinese">中文</string>
-    <string name="btn_English">英文</string>
     <string name="tv_setting_volume">游戏音效</string>
     <string name="btn_volume_on">开启</string>
     <string name="btn_volume_off">关闭</string>
     <string name="tv_goal_time">2048达成次数</string>
+    <string name="not_yet_reached">暂未达成</string>
     <string name="btn_option">配置</string>
     <string name="tip">提示</string>
     <string name="tip_reset_btn">重置后将丢失当前游戏进度，确认重置？</string>
@@ -26,11 +24,14 @@
     <string name="continue_game">继续游戏</string>
     <string name="start_game">开始游戏</string>
     <string name="start_charts">排行榜</string>
-    <string name="game_info">游戏攻略</string>
+    <string name="game_language">游戏语言</string>
     <string name="dialog_hint">输入您的姓名，加入排行榜</string>
     <string name="index">排名</string>
     <string name="name">用户名</string>
     <string name="score">分数</string>
     <string name="time">时间</string>
     <string name="charts">排行榜</string>
+    <string name="go_back">确认退出</string>
+    <string name="back">离开</string>
+    <string name="waite">再玩一会</string>
 </resources>

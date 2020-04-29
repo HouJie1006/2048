@@ -47,7 +47,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/btn_login"
             android:gravity="center"
-            android:text="@string/game_info"
+            android:text="@string/game_language"
             android:textColor="@color/purple"
             android:textSize="26sp" />
 

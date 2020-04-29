@@ -14,8 +14,6 @@ import kylec.hj.g2048.app.Config;
 
 /**
  * 小格子
- * <p>
- * Created by KYLE on 2018/10/2
  */
 public class Cell extends FrameLayout {
 
@@ -43,22 +41,10 @@ public class Cell extends FrameLayout {
      */
     private void init(@NonNull Context context, int leftMargin, int topMargin, int bottomMargin) {
         cellShowText = new TextView(context);
-        // 不同难度设置不同字体大小
-        switch (Config.GRIDColumnCount) {
-            case 4:
-                cellShowText.setTextSize(36);
-                break;
-            case 5:
-                cellShowText.setTextSize(28);
-                break;
-            case 6:
-                cellShowText.setTextSize(20);
-                break;
-            default:
-                cellShowText.setTextSize(36);
-                break;
-        }
+        //居中
         cellShowText.setGravity(Gravity.CENTER);
+        // 设置字体大小
+        cellShowText.setTextSize(36);
         // 抗锯齿
         cellShowText.getPaint().setAntiAlias(true);
         // 粗体

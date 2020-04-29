@@ -32,8 +32,6 @@ import kylec.hj.g2048.db.Gamer;
 
 /**
  * 2048界面
- * <p>
- * Created by KYLE on 2018/10/2
  */
 public class GameView extends GridLayout {
 

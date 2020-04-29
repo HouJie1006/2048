@@ -2,6 +2,7 @@ package kylec.hj.g2048;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +10,10 @@ import android.view.View;
 import android.widget.Button;
 
 import kylec.hj.g2048.app.Constant;
+import kylec.hj.g2048.utils.LanguageUtils;
 import kylec.hj.g2048.view.GameOverDialog;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-
-    private Button startGame;
-    private Button continue_btn;
-    private Button game_Info;
-    private Button charts;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
@@ -25,15 +22,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(0,0);//自带设置进入Activity的动画
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        startGame = findViewById(R.id.startGame);
+        Button startGame = findViewById(R.id.startGame);
         startGame.setOnClickListener(this);
-        continue_btn = findViewById(R.id.continue_btn);
+        Button continue_btn = findViewById(R.id.continue_btn);
         continue_btn.setOnClickListener(this);
-        game_Info = findViewById(R.id.gameInfo);
+        Button game_Info = findViewById(R.id.gameInfo);
         game_Info.setOnClickListener(this);
-        charts = findViewById(R.id.startCharts);
+        Button charts = findViewById(R.id.startCharts);
         charts.setOnClickListener(this);
 
     }
@@ -52,7 +50,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(continueGame);
                 break;
             case R.id.gameInfo:
+
+                LanguageUtils.set(getResources().getConfiguration().locale.getLanguage(),this);
+                startActivity(new Intent(this,LoginActivity.class));
+                finish();
                 break;
+
             case R.id.startCharts:
                 Intent startCharts = new Intent(this,ChartsActivity.class);
                 startActivity(startCharts);
