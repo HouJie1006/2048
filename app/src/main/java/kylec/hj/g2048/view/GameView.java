@@ -96,6 +96,8 @@ public class GameView extends GridLayout {
      */
     private int gridColumnCount;
 
+    private int mScore = 0;
+
     public String gameStatus = "0";
 
     private GameDatabaseHelper gameDatabaseHelper;
@@ -650,6 +652,7 @@ public class GameView extends GridLayout {
      * 记录得分
      */
     private void recordScore(int score) {
+        mScore += score;
         Intent intent = new Intent(ACTION_RECORD_SCORE);
         intent.putExtra(KEY_SCORE, score);
         getContext().sendBroadcast(intent);
@@ -664,7 +667,7 @@ public class GameView extends GridLayout {
 
         // 判断游戏是否结束
         // 格子都不为空且相邻的格子数字不同
-        over:
+/*        over:
         for (int i = 0; i < gridColumnCount; i++) {
             for (int j = 0; j < gridColumnCount; j++) {
                 // 有空格子，游戏还可以继续
@@ -686,22 +689,9 @@ public class GameView extends GridLayout {
                     }
                 }
             }
-        }
+        }*/
         List<Gamer> gamers = getList();
         // 游戏结束，弹出提示框
-        if (isOver) {
-            if (gamers.size() == 10){
-                Gamer gamer = gamers.get(gamers.size() - 1);
-                if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
-                    sendGameOverMsg(ACTION_LOSE_IN);
-                }else {
-                    sendGameOverMsg(ACTION_LOSE);
-                }
-            }else if (gamers.size() < 10){
-                sendGameOverMsg(ACTION_LOSE_IN);
-            }
-        }
-
         // 判断是否达成游戏目标
         for (int i = 0; i < gridColumnCount; i++) {
             for (int j = 0; j < gridColumnCount; j++) {
@@ -710,10 +700,10 @@ public class GameView extends GridLayout {
                     int currentTime = ConfigManager.getGoalTime(getContext()) + 1;
                     ConfigManager.putGoalTime(getContext(), currentTime);
                     Config.GetGoalTime = currentTime;
-
+                    isOver = false;
                     if (gamers.size() == 10){
                         Gamer gamer = gamers.get(gamers.size() - 1);
-                        if (ConfigManager.getCurrentScore(mContext)> gamer.getScore()){
+                        if (mScore> gamer.getScore()){
                             sendGameOverMsg(ACTION_WIN_IN);
                         }else {
                             sendGameOverMsg(ACTION_WIN);
@@ -723,6 +713,18 @@ public class GameView extends GridLayout {
                     }
 
                 }
+            }
+        }
+        if (isOver) {
+            if (gamers.size() == 10){
+                Gamer gamer = gamers.get(gamers.size() - 1);
+                if (mScore> gamer.getScore()){
+                    sendGameOverMsg(ACTION_LOSE_IN);
+                }else {
+                    sendGameOverMsg(ACTION_LOSE);
+                }
+            }else if (gamers.size() < 10){
+                sendGameOverMsg(ACTION_LOSE_IN);
             }
         }
     }
@@ -772,6 +774,7 @@ public class GameView extends GridLayout {
 
         }
         getContext().sendBroadcast(intent);
+
     }
 
     /**

@@ -4,7 +4,7 @@
     <string name="tv_current_score">score</string>
     <string name="tv_best_score">BestScore(4)</string>
     <string name="best_score_rank">BestScore(%1$d)</string>
-    <string name="game_mode_classics">GameTime</string>
+    <string name="game_mode_classics">Time</string>
     <string name="btn_reset">reset</string>
     <string name="no_score">0</string>
     <string name="tv_configuration_option">configuration</string>

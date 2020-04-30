@@ -130,6 +130,11 @@ public class GameOverDialog extends BaseDialog {
         }
         GameDatabaseHelper helper = new GameDatabaseHelper(friendContext, Constant.DB_NAME,null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.query("info",null,null,null,null,null,"score desc");
+        if (cursor.getCount() == 10){
+            cursor.moveToLast();
+            db.delete("info","id=?",new String[]{String.valueOf(cursor.getInt(0))});
+        }
         ContentValues values = new ContentValues();
         values.put("user_name",info.getText().toString());
         values.put("score",finalScore);

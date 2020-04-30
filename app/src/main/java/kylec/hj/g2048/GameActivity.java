@@ -227,6 +227,7 @@ public class GameActivity extends AppCompatActivity {
             bestScores.setText(String.valueOf(Config.BestScore));
             bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
             currentScores.setText(String.valueOf(ConfigManager.getCurrentScore(this)));
+            titleDescribe.setText(TimeUtils.getFormatHMS(Config.currentSecond));
             gameView.initView();
 
         }
@@ -273,9 +274,9 @@ public class GameActivity extends AppCompatActivity {
         StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#FFFFFF"));
         AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(52);
-        spannableString.setSpan(styleSpan, 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        spannableString.setSpan(foregroundColorSpan, 0, 4, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        spannableString.setSpan(absoluteSizeSpan, 0, 4, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(styleSpan, 0, spannableString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(foregroundColorSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(absoluteSizeSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         textView.setText(spannableString);
     }
 
@@ -363,6 +364,7 @@ public class GameActivity extends AppCompatActivity {
                                 .setOnShareClickListener(v -> {
                                     isNeedSave = true;
                                     dialog.addInfo(TimeUtils.getFormatHMS(Config.currentSecond));
+                                    resetTime(0);
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
                                     Toast.makeText(GameActivity.this,"添加成功，返回主界面",Toast.LENGTH_SHORT).show();
                                     startActivity(i);
@@ -384,6 +386,7 @@ public class GameActivity extends AppCompatActivity {
 
                                     //返回主界面
                                     isNeedSave = true;
+                                    resetTime(0);
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
                                     startActivity(i);
                                     dialog.cancel();
@@ -396,6 +399,7 @@ public class GameActivity extends AppCompatActivity {
                 isNeedSave = false;
                 deleteCache(Config.getTableName());
                 saveCurrentScore(0);
+                resetTime(0);
 
                 String result = intent.getStringExtra(GameView.KEY_RESULT);
                 GameOverDialog dialog = new GameOverDialog(GameActivity.this, R.style.CustomDialog);
