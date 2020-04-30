@@ -216,7 +216,7 @@ public class GameActivity extends AppCompatActivity {
             bestScoresRank.setText(getString(R.string.best_score_rank, Config.GRIDColumnCount));
             currentScores.setText("0");
             saveCurrentScore(0);
-            //重置时间04.24
+            //重置时间
             titleDescribe.setText(TimeUtils.getFormatHMS(0));
             resetTime(0);
             //加载游戏界面
@@ -254,7 +254,7 @@ public class GameActivity extends AppCompatActivity {
         menu.setOnClickListener(v -> showConfigDialog());
         //返回登入界面
         back.setOnClickListener(v-> onBackPressed());
-        //共享DataFor2048的数据库（0423）
+        //共享DataFor2048的数据库
         try {
             friendContext = this.createPackageContext("com.hj.datafor2048"
                     ,Context.CONTEXT_IGNORE_SECURITY);
@@ -294,7 +294,7 @@ public class GameActivity extends AppCompatActivity {
                     currentScores.setText("0");
                     saveCurrentScore(0);
                     deleteCache(Config.getTableName());
-                    //重置时间04.22
+                    //重置时间
                     titleDescribe.setText(TimeUtils.getFormatHMS(0));
                     resetTime(0);
                     dialog.cancel();
@@ -325,28 +325,6 @@ public class GameActivity extends AppCompatActivity {
             configDialog.cancel();
     }
 
-
-    /**
-     * 记录得分
-     */
-    private void recordScore(int score) {
-        currentScores.setText(String.valueOf(score));
-        // 当前分数大于最高分
-        if (score > ConfigManager.getBestScore(this)) {
-            updateBestScore(score);
-        }
-    }
-
-    /**
-     * 更新最高分
-     */
-    private void updateBestScore(int newScore) {
-        bestScores.setText(String.valueOf(newScore));
-        Config.BestScore = newScore;
-        ConfigManager.putBestScore(this, newScore);
-    }
-
-
     /**
      * 自定义广播类
      */
@@ -363,7 +341,9 @@ public class GameActivity extends AppCompatActivity {
                 int score = intent.getIntExtra(GameView.KEY_SCORE, 0);
                 // 获取历史分数
                 int historyScore = Integer.parseInt(currentScores.getText().toString());
+                //保存分数
                 saveCurrentScore(score + historyScore);
+                //显示分数
                 recordScore(score + historyScore);
                 // 游戏结束
             } else if (action.equals(GameView.ACTION_WIN_IN)
@@ -442,8 +422,8 @@ public class GameActivity extends AppCompatActivity {
                                 }).show(), 666);
             }
         }
-    }
 
+    }
     /**
      * 重置时间
      */
@@ -458,6 +438,26 @@ public class GameActivity extends AppCompatActivity {
      */
     private void saveCurrentScore(int score) {
         ConfigManager.putCurrentScore(GameActivity.this, score);
+    }
+
+    /**
+     * 记录得分
+     */
+    private void recordScore(int score) {
+        currentScores.setText(String.valueOf(score));
+        // 当前分数大于最高分
+        if (score > ConfigManager.getBestScore(this)) {
+            updateBestScore(score);
+        }
+    }
+
+    /**
+     * 更新最高分
+     */
+    private void updateBestScore(int newScore) {
+        bestScores.setText(String.valueOf(newScore));
+        Config.BestScore = newScore;
+        ConfigManager.putBestScore(this, newScore);
     }
 
     /**

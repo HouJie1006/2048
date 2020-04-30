@@ -34,4 +34,6 @@
     <string name="go_back">确认退出</string>
     <string name="back">离开</string>
     <string name="waite">再玩一会</string>
+    <string name="appwidget_text">2048</string>
+    <string name="add_widget">Add widget</string>
 </resources>

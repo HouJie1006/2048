@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startGame.setOnClickListener(this);
         Button continue_btn = findViewById(R.id.continue_btn);
         continue_btn.setOnClickListener(this);
-        Button game_Info = findViewById(R.id.gameInfo);
+        Button game_Info = findViewById(R.id.gameLanguage);
         game_Info.setOnClickListener(this);
         Button charts = findViewById(R.id.startCharts);
         charts.setOnClickListener(this);
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 continueGame.putExtra("gameStatus", Constant.GAME_CONTINUE);
                 startActivity(continueGame);
                 break;
-            case R.id.gameInfo:
+            case R.id.gameLanguage:
 
                 LanguageUtils.set(getResources().getConfiguration().locale.getLanguage(),this);
                 startActivity(new Intent(this,LoginActivity.class));
