@@ -13,7 +13,6 @@ import android.widget.TextView;
 import kylec.hj.g2048.R;
 
 /**
- * Created by KYLE on 2018/10/6
  */
 public class CommonDialog extends Dialog {
 

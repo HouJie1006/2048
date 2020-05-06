@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-/**
- * Created by KYLE on 2018/10/6
- */
+
 public abstract class BaseDialog extends Dialog {
 
     BaseDialog(@NonNull Context context, int themeResId) {

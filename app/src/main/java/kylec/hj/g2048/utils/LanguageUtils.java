@@ -7,6 +7,9 @@ import android.util.DisplayMetrics;
 
 import java.util.Locale;
 
+/**
+ * 语言切换工具类
+ */
 public class LanguageUtils {
     public static void set(String isEnglish, Context context){
 

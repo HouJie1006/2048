@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.gesture.GestureOverlayView;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -23,7 +22,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -361,7 +359,7 @@ public class GameActivity extends AppCompatActivity {
                         dialog.setFinalScore(currentScores.getText().toString())
                                 .setTitle(result)
                                 .setEdit(action)
-                                .setOnShareClickListener(v -> {
+                                .setOnClickListener(v -> {
                                     isNeedSave = true;
                                     dialog.addInfo(TimeUtils.getFormatHMS(Config.currentSecond));
                                     resetTime(0);
@@ -371,19 +369,7 @@ public class GameActivity extends AppCompatActivity {
                                     dialog.cancel();
                                     finish();
                                 })
-                                .setOnGoOnClickListener(v -> {
-                                  /*  // 清除缓存
-                                    isNeedSave = true;
-                                    gameView.reset();
-                                    deleteCache(Config.getTableName());
-                                    saveCurrentScore(0);
-                                    gameView.initView(Config.CurrentGameMode);
-                                    currentScores.setText("0");
-                                    //重置时间04.23
-                                    titleDescribe.setText(TimeUtils.getFormatHMS(0));
-                                    resetTime(0);
-                                    dialog.cancel();*/
-
+                                .setOnBackClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
                                     resetTime(0);
@@ -408,7 +394,7 @@ public class GameActivity extends AppCompatActivity {
                         dialog.setFinalScore(currentScores.getText().toString())
                                 .setTitle(result)
                                 .setEdit(action)
-                                .setOnShareClickListener(v -> {
+                                .setOnClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
@@ -416,7 +402,7 @@ public class GameActivity extends AppCompatActivity {
                                     dialog.cancel();
                                     finish();
                                 })
-                                .setOnGoOnClickListener(v -> {
+                                .setOnBackClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
