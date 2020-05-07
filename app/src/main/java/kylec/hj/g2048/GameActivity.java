@@ -124,6 +124,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        saveGameProgress();
         isPause = true;
     }
 
@@ -177,7 +178,6 @@ public class GameActivity extends AppCompatActivity {
             gameTime.purge();
             gameTime = null;
         }
-
         super.onDestroy();
     }
 
