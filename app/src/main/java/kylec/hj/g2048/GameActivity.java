@@ -1,6 +1,7 @@
 package kylec.hj.g2048;
 
 import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,6 +16,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -247,6 +250,7 @@ public class GameActivity extends AppCompatActivity {
         filter.addAction(GameView.ACTION_LOSE);
         filter.addAction(GameView.ACTION_WIN_IN);
         filter.addAction(GameView.ACTION_LOSE_IN);
+        filter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
         registerReceiver(myReceiver, filter);
 
         // 重置按钮，重新开始游戏
@@ -425,7 +429,32 @@ public class GameActivity extends AppCompatActivity {
                                     finish();
                                 }).show(), 666);
             }
+
+
+            if (!intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+                TelephonyManager tm = (TelephonyManager) context
+                        .getSystemService(Service.TELEPHONY_SERVICE);
+                tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
+            }
+
         }
+        PhoneStateListener listener = new PhoneStateListener() {
+
+            @Override
+            public void onCallStateChanged(int state, String incomingNumber) {
+                super.onCallStateChanged(state, incomingNumber);
+                switch (state) {
+                    case TelephonyManager.CALL_STATE_IDLE:
+                        isPause = false;
+                        break;
+                    case TelephonyManager.CALL_STATE_OFFHOOK:
+                        break;
+                    case TelephonyManager.CALL_STATE_RINGING:
+                        isPause = true;
+                        break;
+                }
+            }
+        };
 
     }
     /**
