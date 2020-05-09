@@ -1,8 +1,5 @@
 package kylec.hj.g2048.app;
 
-/**
- * Created by KYLE on 2019/5/3 - 16:28
- */
 public class Constant {
 
     public static final String DB_NAME = "GAME2048.db";

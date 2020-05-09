@@ -2,18 +2,37 @@ package kylec.hj.g2048;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 
 import kylec.hj.g2048.app.Constant;
+
+import kylec.hj.g2048.service.MusicService;
 import kylec.hj.g2048.utils.LanguageUtils;
-import kylec.hj.g2048.view.GameOverDialog;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private  Intent intent;
+    private MusicService musicService;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            musicService = ((MusicService.MusicBinder) iBinder).getMusicService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            musicService = null;
+        }
+    };
 
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
@@ -34,6 +53,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button charts = findViewById(R.id.startCharts);
         charts.setOnClickListener(this);
 
+        intent = new Intent(LoginActivity.this,MusicService.class);
+        startService(intent);
+        bindService(intent,connection,Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(connection);
+        stopService(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(intent);
+        bindService(intent,connection,Context.BIND_AUTO_CREATE);
     }
 
     @Override

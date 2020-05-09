@@ -3,7 +3,7 @@ package kylec.hj.g2048.db;
 import androidx.annotation.NonNull;
 
 /**
- * Created by KYLE on 2019/5/3 - 15:34
+ * 格子坐标和内容实体类
  */
 public class CellEntity {
 

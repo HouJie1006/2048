@@ -1,5 +1,7 @@
 package kylec.hj.g2048.utils;
-
+/**
+ * 时间格式化工具类
+ */
 public class TimeUtils {
     public static String getFormatHMS(long time){
         time=time/1000;//总秒数

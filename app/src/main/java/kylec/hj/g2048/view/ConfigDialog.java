@@ -13,8 +13,6 @@ import kylec.hj.g2048.app.Config;
 
 /**
  * 自定义配置对话框
- * <p>
- * Created by KYLE on 2018/10/4
  */
 
 public class ConfigDialog extends BaseDialog {

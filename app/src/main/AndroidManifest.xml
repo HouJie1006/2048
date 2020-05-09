@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="kylec.hj.g2048"
-    android:sharedUserId="com.c">
+    android:sharedUserId="com.hj">
 
     <application
         android:name=".app.Config"
@@ -13,6 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <service
+            android:name=".service.MusicService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <receiver android:name=".widget.GameWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -22,7 +27,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/game_widget_info" />
         </receiver>
-
         <activity android:name=".ChartsActivity" />
         <activity android:name=".LoginActivity" />
         <activity

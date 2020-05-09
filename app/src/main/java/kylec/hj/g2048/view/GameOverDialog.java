@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,8 +31,8 @@ public class GameOverDialog extends BaseDialog {
     private String action;
     private EditText info;
 
-    private View.OnClickListener onShareClickListener;
-    private View.OnClickListener onGoOnClickListener;
+    private View.OnClickListener onClickListener;
+    private View.OnClickListener onBackClickListener;
 
     private Context friendContext;
     private Context mContext;
@@ -57,15 +56,15 @@ public class GameOverDialog extends BaseDialog {
     private void init() {
         TextView title = findViewById(R.id.tv_custom_title);
         TextView finalScore = findViewById(R.id.tv_final_score);
-        MaterialButton share = findViewById(R.id.tv_share);
-        MaterialButton goOn = findViewById(R.id.tv_go_on);
+        MaterialButton on = findViewById(R.id.tv_share);
+        MaterialButton back = findViewById(R.id.tv_go_on);
 
 
-        if (onShareClickListener != null) {
-            share.setOnClickListener(onShareClickListener);
+        if (onClickListener != null) {
+            on.setOnClickListener(onClickListener);
         }
-        if (onGoOnClickListener != null) {
-            goOn.setOnClickListener(onGoOnClickListener);
+        if (onBackClickListener != null) {
+            back.setOnClickListener(onBackClickListener);
         }
         if (!TextUtils.isEmpty(this.finalScore)) {
             finalScore.setText(this.finalScore);
@@ -87,15 +86,15 @@ public class GameOverDialog extends BaseDialog {
 
     }
 
-    public GameOverDialog setOnShareClickListener(
-            View.OnClickListener onShareClickListener) {
-        this.onShareClickListener = onShareClickListener;
+    public GameOverDialog setOnClickListener(
+            View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
         return this;
     }
 
-    public GameOverDialog setOnGoOnClickListener(
-            View.OnClickListener onGoOnClickListener) {
-        this.onGoOnClickListener = onGoOnClickListener;
+    public GameOverDialog setOnBackClickListener(
+            View.OnClickListener onBackClickListener) {
+        this.onBackClickListener = onBackClickListener;
         return this;
     }
 

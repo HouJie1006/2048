@@ -323,7 +323,7 @@ public class GameView extends GridLayout {
     }
 
     /**
-     * 添加随机数字（2或4）或直接添加一个1024
+     * 添加随机数字（2或4）
      */
     public void addDigital() {
         getEmptyCell();
@@ -649,7 +649,7 @@ public class GameView extends GridLayout {
     }
 
     /**
-     * 记录得分
+     * 记录得分(一次移动格子合拼的分数)
      */
     private void recordScore(int score) {
         mScore += score;
@@ -667,7 +667,7 @@ public class GameView extends GridLayout {
 
         // 判断游戏是否结束
         // 格子都不为空且相邻的格子数字不同
-/*        over:
+        over:
         for (int i = 0; i < gridColumnCount; i++) {
             for (int j = 0; j < gridColumnCount; j++) {
                 // 有空格子，游戏还可以继续
@@ -689,7 +689,7 @@ public class GameView extends GridLayout {
                     }
                 }
             }
-        }*/
+        }
         List<Gamer> gamers = getList();
         // 游戏结束，弹出提示框
         // 判断是否达成游戏目标

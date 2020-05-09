@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.gesture.GestureOverlayView;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -26,7 +25,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,12 +75,35 @@ public class GameActivity extends AppCompatActivity {
 
     private Timer gameTime;
     private boolean isPause = false;
+    /**
+     * 监听电话状态
+     */
+    PhoneStateListener listener = new PhoneStateListener() {
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+            switch (state) {
+                case TelephonyManager.CALL_STATE_IDLE:
+                    isPause = false;
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    isPause = true;
+                    break;
+            }
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //注册监听（注册到系统电话管理服务）
+        TelephonyManager tm = (TelephonyManager)getSystemService(Service.TELEPHONY_SERVICE);
+        tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
+
         Intent intent = getIntent();
         String data = intent.getStringExtra("gameStatus");
         initView(data);
@@ -129,6 +150,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        saveGameProgress();
         isPause = true;
     }
 
@@ -182,7 +204,6 @@ public class GameActivity extends AppCompatActivity {
             gameTime.purge();
             gameTime = null;
         }
-
         super.onDestroy();
     }
 
@@ -250,7 +271,6 @@ public class GameActivity extends AppCompatActivity {
         filter.addAction(GameView.ACTION_LOSE);
         filter.addAction(GameView.ACTION_WIN_IN);
         filter.addAction(GameView.ACTION_LOSE_IN);
-        filter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
         registerReceiver(myReceiver, filter);
 
         // 重置按钮，重新开始游戏
@@ -365,7 +385,7 @@ public class GameActivity extends AppCompatActivity {
                         dialog.setFinalScore(currentScores.getText().toString())
                                 .setTitle(result)
                                 .setEdit(action)
-                                .setOnShareClickListener(v -> {
+                                .setOnClickListener(v -> {
                                     isNeedSave = true;
                                     dialog.addInfo(TimeUtils.getFormatHMS(Config.currentSecond));
                                     resetTime(0);
@@ -375,19 +395,7 @@ public class GameActivity extends AppCompatActivity {
                                     dialog.cancel();
                                     finish();
                                 })
-                                .setOnGoOnClickListener(v -> {
-                                  /*  // 清除缓存
-                                    isNeedSave = true;
-                                    gameView.reset();
-                                    deleteCache(Config.getTableName());
-                                    saveCurrentScore(0);
-                                    gameView.initView(Config.CurrentGameMode);
-                                    currentScores.setText("0");
-                                    //重置时间04.23
-                                    titleDescribe.setText(TimeUtils.getFormatHMS(0));
-                                    resetTime(0);
-                                    dialog.cancel();*/
-
+                                .setOnBackClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
                                     resetTime(0);
@@ -412,7 +420,7 @@ public class GameActivity extends AppCompatActivity {
                         dialog.setFinalScore(currentScores.getText().toString())
                                 .setTitle(result)
                                 .setEdit(action)
-                                .setOnShareClickListener(v -> {
+                                .setOnClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
@@ -420,7 +428,7 @@ public class GameActivity extends AppCompatActivity {
                                     dialog.cancel();
                                     finish();
                                 })
-                                .setOnGoOnClickListener(v -> {
+                                .setOnBackClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
@@ -430,31 +438,7 @@ public class GameActivity extends AppCompatActivity {
                                 }).show(), 666);
             }
 
-
-            if (!intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-                TelephonyManager tm = (TelephonyManager) context
-                        .getSystemService(Service.TELEPHONY_SERVICE);
-                tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
-            }
-
         }
-        PhoneStateListener listener = new PhoneStateListener() {
-
-            @Override
-            public void onCallStateChanged(int state, String incomingNumber) {
-                super.onCallStateChanged(state, incomingNumber);
-                switch (state) {
-                    case TelephonyManager.CALL_STATE_IDLE:
-                        isPause = false;
-                        break;
-                    case TelephonyManager.CALL_STATE_OFFHOOK:
-                        break;
-                    case TelephonyManager.CALL_STATE_RINGING:
-                        isPause = true;
-                        break;
-                }
-            }
-        };
 
     }
     /**

@@ -1,7 +1,7 @@
 package kylec.hj.g2048.db;
 
 /**
- * 游戏排行记录
+ * 游戏排行记录实体类
  */
 public class Gamer {
 
