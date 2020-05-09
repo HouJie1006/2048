@@ -75,17 +75,39 @@ public class GameActivity extends AppCompatActivity {
 
     private Timer gameTime;
     private boolean isPause = false;
+    /**
+     * 监听电话状态
+     */
+    PhoneStateListener listener = new PhoneStateListener() {
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+            switch (state) {
+                case TelephonyManager.CALL_STATE_IDLE:
+                    isPause = false;
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    isPause = true;
+                    break;
+            }
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //注册监听（注册到系统电话管理服务）
+        TelephonyManager tm = (TelephonyManager)getSystemService(Service.TELEPHONY_SERVICE);
+        tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
+
         Intent intent = getIntent();
         String data = intent.getStringExtra("gameStatus");
         initView(data);
         initData();
-        sendBroadcast(new Intent(GameView.ACTION_RECORD_SCORE));
         getTime();
     }
 
@@ -249,10 +271,6 @@ public class GameActivity extends AppCompatActivity {
         filter.addAction(GameView.ACTION_LOSE);
         filter.addAction(GameView.ACTION_WIN_IN);
         filter.addAction(GameView.ACTION_LOSE_IN);
-
-//        filter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
-//        filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-
         registerReceiver(myReceiver, filter);
 
         // 重置按钮，重新开始游戏
@@ -420,28 +438,7 @@ public class GameActivity extends AppCompatActivity {
                                 }).show(), 666);
             }
 
-
-                TelephonyManager tm = (TelephonyManager) context
-                        .getSystemService(Service.TELEPHONY_SERVICE);
-                tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
         }
-
-        PhoneStateListener listener = new PhoneStateListener() {
-            @Override
-            public void onCallStateChanged(int state, String incomingNumber) {
-                super.onCallStateChanged(state, incomingNumber);
-                switch (state) {
-                    case TelephonyManager.CALL_STATE_IDLE:
-                        isPause = false;
-                        break;
-                    case TelephonyManager.CALL_STATE_OFFHOOK:
-                        break;
-                    case TelephonyManager.CALL_STATE_RINGING:
-                        isPause = true;
-                        break;
-                }
-            }
-        };
 
     }
     /**
