@@ -649,7 +649,7 @@ public class GameView extends GridLayout {
     }
 
     /**
-     * 记录得分
+     * 记录得分(一次移动格子合拼的分数)
      */
     private void recordScore(int score) {
         mScore += score;

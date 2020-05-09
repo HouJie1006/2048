@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="kylec.hj.g2048"
-    android:sharedUserId="com.c">
+    android:sharedUserId="com.hj">
 
     <application
         android:name=".app.Config"
@@ -27,7 +27,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/game_widget_info" />
         </receiver>
-
         <activity android:name=".ChartsActivity" />
         <activity android:name=".LoginActivity" />
         <activity
