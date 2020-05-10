@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="132dp" />
+        app:layout_constraintGuide_percent="0.32" />
 
     <LinearLayout
         android:id="@+id/ll_scores"
@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/bg_score_panel"
+        android:elevation="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/ll_best_score"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -65,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/bg_score_panel"
+        android:elevation="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ll_scores"
@@ -127,6 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
+        android:elevation="8dp"
         android:padding="8dp"
         android:text="@string/btn_option"
         android:textAppearance="@style/TextAppearance.AppCompat"
@@ -141,8 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24213406" />
-
+        app:layout_constraintGuide_percent="0.24" />
 
 
     <kylec.hj.g2048.view.GameView
@@ -157,18 +159,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
-
-    <ImageView
-        android:id="@+id/iv_show_cheat"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:layout_margin="12dp"
-        android:src="@drawable/ic_cheat_kick_starter"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btn_back"

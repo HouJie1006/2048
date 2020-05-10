@@ -297,7 +297,7 @@ public class GameActivity extends AppCompatActivity {
         SpannableString spannableString = new SpannableString(textView.getText().toString());
         StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#FFFFFF"));
-        AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(52);
+        AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(35);
         spannableString.setSpan(styleSpan, 0, spannableString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         spannableString.setSpan(foregroundColorSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         spannableString.setSpan(absoluteSizeSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);

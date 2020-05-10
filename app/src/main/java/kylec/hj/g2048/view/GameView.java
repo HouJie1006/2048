@@ -217,7 +217,8 @@ public class GameView extends GridLayout {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         //  屏幕的宽度-屏幕密度=卡片能放的总宽度
         int cardWidth = metrics.widthPixels - dp2px();
-        return (cardWidth - 12) / gridColumnCount;
+        int cardHeight = metrics.heightPixels - dp2px();
+        return (Math.min(cardWidth,cardHeight) - 10) / gridColumnCount;
     }
 
     /**
@@ -240,9 +241,9 @@ public class GameView extends GridLayout {
             for (int j = 0; j < gridColumnCount; j++) {
                 if (i == gridColumnCount - 1) {
                     // 为最底下的格子加上bottomMargin
-                    cell = new Cell(getContext(), 16, 16, 16);
+                    cell = new Cell(getContext(), 2, 2, 4);
                 } else {
-                    cell = new Cell(getContext(), 16, 16, 0);
+                    cell = new Cell(getContext(), 2, 2, 0);
                 }
                 cell.setDigital(0);
                 addView(cell, cellWidth, cellHeight);
