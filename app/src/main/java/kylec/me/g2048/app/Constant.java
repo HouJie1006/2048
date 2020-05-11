@@ -1,4 +1,4 @@
-package kylec.hj.g2048.app;
+package kylec.me.g2048.app;
 
 public class Constant {
 

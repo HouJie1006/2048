@@ -8,7 +8,7 @@
 
     <TextView
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="1"
         android:id="@+id/gamer_index"
         android:gravity="center_vertical"
@@ -18,7 +18,7 @@
 
     <TextView
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="2048"
         android:id="@+id/gamer_name"
         android:gravity="center"
@@ -28,7 +28,7 @@
 
     <TextView
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="789"
         android:id="@+id/gamer_score"
         android:gravity="center"
@@ -38,7 +38,7 @@
 
     <TextView
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="@string/time"
         android:id="@+id/gamer_time"
         android:gravity="center"

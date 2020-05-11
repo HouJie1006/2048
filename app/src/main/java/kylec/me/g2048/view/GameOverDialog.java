@@ -1,11 +1,10 @@
-package kylec.hj.g2048.view;
+package kylec.me.g2048.view;
 
 import android.content.ContentValues;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
@@ -15,9 +14,9 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
-import kylec.hj.g2048.R;
-import kylec.hj.g2048.app.Constant;
-import kylec.hj.g2048.db.GameDatabaseHelper;
+import kylec.me.g2048.R;
+import kylec.me.g2048.app.Constant;
+import kylec.me.g2048.db.GameDatabaseHelper;
 
 /**
  * 游戏结束对话框
@@ -34,7 +33,6 @@ public class GameOverDialog extends BaseDialog {
     private View.OnClickListener onClickListener;
     private View.OnClickListener onBackClickListener;
 
-    private Context friendContext;
     private Context mContext;
 
     public GameOverDialog(@NonNull Context context, int themeResId) {
@@ -120,14 +118,7 @@ public class GameOverDialog extends BaseDialog {
     }
 
     public void addInfo(String gameTime){
-        //创建数据库
-        try {
-            friendContext = mContext.createPackageContext("com.hj.datafor2048"
-                    ,Context.CONTEXT_IGNORE_SECURITY);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        GameDatabaseHelper helper = new GameDatabaseHelper(friendContext, Constant.DB_NAME,null,1);
+        GameDatabaseHelper helper = new GameDatabaseHelper(mContext, Constant.DB_NAME,null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.query("info",null,null,null,null,null,"score desc");
         if (cursor.getCount() == 10){

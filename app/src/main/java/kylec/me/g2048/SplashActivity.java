@@ -1,4 +1,4 @@
-package kylec.hj.g2048;
+package kylec.me.g2048;
 
 import androidx.appcompat.app.AppCompatActivity;
 

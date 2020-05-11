@@ -1,7 +1,6 @@
-package kylec.hj.g2048.adapter;
+package kylec.me.g2048.adapter;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import kylec.hj.g2048.R;
-import kylec.hj.g2048.app.Constant;
-import kylec.hj.g2048.db.GameDatabaseHelper;
-import kylec.hj.g2048.db.Gamer;
-import kylec.hj.g2048.view.CommonDialog;
+import kylec.me.g2048.R;
+import kylec.me.g2048.app.Constant;
+import kylec.me.g2048.db.GameDatabaseHelper;
+import kylec.me.g2048.db.Gamer;
+import kylec.me.g2048.view.CommonDialog;
 
 public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder> {
 
@@ -87,17 +86,17 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
      * @param position
      */
     public void deleteData(Context context,int position){
-        try {
+/*        try {
            Context friendContext = context.createPackageContext("com.hj.datafor2048"
-                    , Context.CONTEXT_IGNORE_SECURITY);
-            GameDatabaseHelper helper = new GameDatabaseHelper(friendContext, Constant.DB_NAME,null,1);
+                    , Context.CONTEXT_IGNORE_SECURITY);*/
+            GameDatabaseHelper helper = new GameDatabaseHelper(context, Constant.DB_NAME,null,1);
             SQLiteDatabase db = helper.getWritableDatabase();
             db.delete("info","id=?",new String[]{String.valueOf(mGamer.get(position).getId())});
             db.close();
             mGamer.remove(position);
             notifyDataSetChanged();
-        } catch (PackageManager.NameNotFoundException e) {
+/*        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

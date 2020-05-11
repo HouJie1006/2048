@@ -1,4 +1,4 @@
-package kylec.hj.g2048.utils;
+package kylec.me.g2048.utils;
 /**
  * 时间格式化工具类
  */

@@ -1,4 +1,4 @@
-package kylec.hj.g2048.widget;
+package kylec.me.g2048.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,9 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import kylec.hj.g2048.LoginActivity;
-import kylec.hj.g2048.R;
-import kylec.hj.g2048.SplashActivity;
+import kylec.me.g2048.R;
+import kylec.me.g2048.SplashActivity;
 
 /**
  * 小部件点击按钮

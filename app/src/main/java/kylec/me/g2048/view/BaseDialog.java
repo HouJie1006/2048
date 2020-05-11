@@ -1,4 +1,4 @@
-package kylec.hj.g2048.view;
+package kylec.me.g2048.view;
 
 import android.app.Dialog;
 import android.content.Context;

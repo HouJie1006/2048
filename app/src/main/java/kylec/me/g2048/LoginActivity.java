@@ -1,4 +1,4 @@
-package kylec.hj.g2048;
+package kylec.me.g2048;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,10 +12,10 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 
-import kylec.hj.g2048.app.Constant;
+import kylec.me.g2048.app.Constant;
 
-import kylec.hj.g2048.service.MusicService;
-import kylec.hj.g2048.utils.LanguageUtils;
+import kylec.me.g2048.service.MusicService;
+import kylec.me.g2048.utils.LanguageUtils;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         game_Info.setOnClickListener(this);
         Button charts = findViewById(R.id.startCharts);
         charts.setOnClickListener(this);
-
         intent = new Intent(LoginActivity.this,MusicService.class);
         startService(intent);
         bindService(intent,connection,Context.BIND_AUTO_CREATE);

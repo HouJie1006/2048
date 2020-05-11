@@ -1,4 +1,4 @@
-package kylec.hj.g2048.view;
+package kylec.me.g2048.view;
 
 import android.content.Context;
 
@@ -9,8 +9,7 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import kylec.hj.g2048.R;
-import kylec.hj.g2048.app.Config;
+import kylec.me.g2048.R;
 
 /**
  * 小格子

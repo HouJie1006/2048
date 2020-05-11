@@ -147,7 +147,7 @@
         app:layout_constraintGuide_percent="0.24" />
 
 
-    <kylec.hj.g2048.view.GameView
+    <kylec.me.g2048.view.GameView
         android:id="@+id/game_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

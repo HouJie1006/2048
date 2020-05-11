@@ -1,4 +1,4 @@
-package kylec.hj.g2048.view;
+package kylec.me.g2048.view;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import kylec.hj.g2048.R;
+import kylec.me.g2048.R;
 
 /**
  */

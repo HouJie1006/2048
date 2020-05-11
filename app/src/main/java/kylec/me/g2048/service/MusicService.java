@@ -1,4 +1,4 @@
-package kylec.hj.g2048.service;
+package kylec.me.g2048.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
-import kylec.hj.g2048.R;
+import kylec.me.g2048.R;
 
 /**
  * 音乐播放服务

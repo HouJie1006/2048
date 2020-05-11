@@ -1,4 +1,4 @@
-package kylec.hj.g2048.utils;
+package kylec.me.g2048.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;

@@ -1,4 +1,4 @@
-package kylec.hj.g2048;
+package kylec.me.g2048;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -36,16 +35,16 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import kylec.hj.g2048.app.Config;
-import kylec.hj.g2048.app.ConfigManager;
-import kylec.hj.g2048.app.Constant;
-import kylec.hj.g2048.db.CellEntity;
-import kylec.hj.g2048.db.GameDatabaseHelper;
-import kylec.hj.g2048.utils.TimeUtils;
-import kylec.hj.g2048.view.CommonDialog;
-import kylec.hj.g2048.view.ConfigDialog;
-import kylec.hj.g2048.view.GameOverDialog;
-import kylec.hj.g2048.view.GameView;
+import kylec.me.g2048.app.Config;
+import kylec.me.g2048.app.ConfigManager;
+import kylec.me.g2048.app.Constant;
+import kylec.me.g2048.db.CellEntity;
+import kylec.me.g2048.db.GameDatabaseHelper;
+import kylec.me.g2048.utils.TimeUtils;
+import kylec.me.g2048.view.CommonDialog;
+import kylec.me.g2048.view.ConfigDialog;
+import kylec.me.g2048.view.GameOverDialog;
+import kylec.me.g2048.view.GameView;
 
 /**
  * 游戏界面
@@ -67,7 +66,6 @@ public class GameActivity extends AppCompatActivity {
 
     private GameDatabaseHelper gameDatabaseHelper;
     private SQLiteDatabase db;
-    private Context friendContext;
 
     private boolean isNeedSave = true;
 
@@ -83,13 +81,13 @@ public class GameActivity extends AppCompatActivity {
         public void onCallStateChanged(int state, String incomingNumber) {
             super.onCallStateChanged(state, incomingNumber);
             switch (state) {
+                case TelephonyManager.CALL_STATE_RINGING:
+                    isPause = true;
+                    break;
                 case TelephonyManager.CALL_STATE_IDLE:
                     isPause = false;
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
-                    break;
-                case TelephonyManager.CALL_STATE_RINGING:
-                    isPause = true;
                     break;
             }
         }
@@ -150,8 +148,12 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        saveGameProgress();
         isPause = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -279,14 +281,7 @@ public class GameActivity extends AppCompatActivity {
         menu.setOnClickListener(v -> showConfigDialog());
         //返回登入界面
         back.setOnClickListener(v-> onBackPressed());
-        //共享DataFor2048的数据库
-        try {
-            friendContext = this.createPackageContext("com.hj.datafor2048"
-                    ,Context.CONTEXT_IGNORE_SECURITY);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        gameDatabaseHelper = new GameDatabaseHelper(friendContext, Constant.DB_NAME, null, 1);
+        gameDatabaseHelper = new GameDatabaseHelper(this, Constant.DB_NAME, null, 1);
         db = gameDatabaseHelper.getWritableDatabase();
     }
 

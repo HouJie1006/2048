@@ -1,4 +1,4 @@
-package kylec.hj.g2048.view;
+package kylec.me.g2048.view;
 
 import android.content.Context;
 
@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import kylec.hj.g2048.R;
-import kylec.hj.g2048.app.Config;
+import kylec.me.g2048.R;
+import kylec.me.g2048.app.Config;
 
 /**
  * 自定义配置对话框

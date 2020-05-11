@@ -1,4 +1,4 @@
-package kylec.hj.g2048.db;
+package kylec.me.g2048.db;
 
 import androidx.annotation.NonNull;
 

@@ -48,7 +48,7 @@
         android:hint="@string/dialog_hint"
         android:visibility="invisible"
         android:singleLine="true"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:textColor="@color/black"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"

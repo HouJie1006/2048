@@ -1,12 +1,10 @@
-package kylec.hj.g2048.view;
+package kylec.me.g2048.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -22,13 +20,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import kylec.hj.g2048.R;
-import kylec.hj.g2048.app.Config;
-import kylec.hj.g2048.app.ConfigManager;
-import kylec.hj.g2048.app.Constant;
-import kylec.hj.g2048.db.CellEntity;
-import kylec.hj.g2048.db.GameDatabaseHelper;
-import kylec.hj.g2048.db.Gamer;
+import kylec.me.g2048.R;
+import kylec.me.g2048.app.Config;
+import kylec.me.g2048.app.ConfigManager;
+import kylec.me.g2048.app.Constant;
+import kylec.me.g2048.db.CellEntity;
+import kylec.me.g2048.db.GameDatabaseHelper;
+import kylec.me.g2048.db.Gamer;
 
 /**
  * 2048界面
@@ -102,7 +100,6 @@ public class GameView extends GridLayout {
 
     private GameDatabaseHelper gameDatabaseHelper;
     private Context mContext;
-    private Context friendContext;
 
     public GameView(Context context) {
         this(context, null);
@@ -116,14 +113,7 @@ public class GameView extends GridLayout {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         initSoundPool();
-        //调用com.hj.DataFor2048的数据库
-        try {
-            friendContext = mContext.createPackageContext("com.hj.datafor2048"
-                    ,Context.CONTEXT_IGNORE_SECURITY);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        gameDatabaseHelper = new GameDatabaseHelper(friendContext, Constant.DB_NAME, null, 1);
+        gameDatabaseHelper = new GameDatabaseHelper(mContext, Constant.DB_NAME, null, 1);
     }
 
     /**

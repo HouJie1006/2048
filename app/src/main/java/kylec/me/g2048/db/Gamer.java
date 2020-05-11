@@ -1,4 +1,4 @@
-package kylec.hj.g2048.db;
+package kylec.me.g2048.db;
 
 /**
  * 游戏排行记录实体类
