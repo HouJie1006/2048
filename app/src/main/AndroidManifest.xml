@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="kylec.me.g2048"
+    package="kylec.hj.g2048"
     >
 
     <application
-        android:name="kylec.me.g2048.app.Config"
+        android:name="kylec.hj.g2048.app.Config"
         android:allowBackup="false"
         android:configChanges="locale"
         android:icon="@mipmap/ic_launcher"
@@ -14,17 +14,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <provider
-            android:name="kylec.me.g2048.provider.DatabaseProvider"
-            android:authorities="kylec.me.g2048.cp"
+            android:name="kylec.hj.g2048.provider.DatabaseProvider"
+            android:authorities="kylec.hj.g2048.cp"
             android:enabled="true"
             android:exported="true"></provider>
 
         <service
-            android:name="kylec.me.g2048.service.MusicService"
+            android:name="kylec.hj.g2048.service.MusicService"
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name="kylec.me.g2048.widget.GameWidget">
+        <receiver android:name="kylec.hj.g2048.widget.GameWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -34,10 +34,10 @@
                 android:resource="@xml/game_widget_info" />
         </receiver>
 
-        <activity android:name="kylec.me.g2048.ChartsActivity" />
-        <activity android:name="kylec.me.g2048.LoginActivity" />
+        <activity android:name="kylec.hj.g2048.ChartsActivity" />
+        <activity android:name="kylec.hj.g2048.LoginActivity" />
         <activity
-            android:name="kylec.me.g2048.SplashActivity"
+            android:name="kylec.hj.g2048.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="kylec.me.g2048.GameActivity"
+            android:name="kylec.hj.g2048.GameActivity"
             android:screenOrientation="portrait" />
     </application>
 

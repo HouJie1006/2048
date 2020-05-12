@@ -148,7 +148,7 @@
 
 
 
-    <kylec.me.g2048.view.GameView
+    <kylec.hj.g2048.view.GameView
         android:id="@+id/game_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
