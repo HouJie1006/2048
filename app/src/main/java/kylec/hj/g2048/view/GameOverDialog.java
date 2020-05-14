@@ -71,7 +71,7 @@ public class GameOverDialog extends BaseDialog {
             title.setText(this.title);
         }
         /**
-         * 获取输入名
+         * 判断是否显示输入框
          */
         info = findViewById(R.id.et_name);
         if (action.equals(GameView.ACTION_WIN_IN)

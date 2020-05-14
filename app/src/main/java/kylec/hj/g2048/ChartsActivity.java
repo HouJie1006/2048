@@ -25,8 +25,6 @@ import kylec.hj.g2048.db.Gamer;
 public class ChartsActivity extends AppCompatActivity {
 
     List<Gamer> mGamer = new ArrayList<>();
-    private Context friendContext;
-    private ChartsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,7 @@ public class ChartsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycle_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ChartsAdapter(mGamer);
+        ChartsAdapter adapter = new ChartsAdapter(mGamer);
         recyclerView.setAdapter(adapter);
 
         Button chartsReturn = findViewById(R.id.charts_return);
@@ -52,12 +50,6 @@ public class ChartsActivity extends AppCompatActivity {
      * 获取数据库的排行信息
      */
     public void getData(){
-/*        try {
-            friendContext = this.createPackageContext("com.hj.datafor2048"
-                    ,Context.CONTEXT_IGNORE_SECURITY);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }*/
         GameDatabaseHelper helper = new GameDatabaseHelper(this, Constant.DB_NAME,null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.query("info",null,null,null,null,null,"score desc");

@@ -36,23 +36,16 @@ public class DatabaseProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = gameDatabaseHelper.getWritableDatabase();
         Cursor cursor = null;
-        switch (uriMatcher.match(uri)) {
-            case INFO:
-                cursor = db.query("Info", projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            default:
-                break;
+        if (uriMatcher.match(uri) == INFO) {
+            cursor = db.query("Info", projection, selection, selectionArgs, null, null, sortOrder);
         }
         return cursor;
     }
 
     @Override
     public String getType(Uri uri) {
-        switch (uriMatcher.match(uri)) {
-            case INFO:
-                return "vnd.android.cursor.dir/vnd.kylec.hj.g2048.cp.info";
-            default:
-                break;
+        if (uriMatcher.match(uri) == INFO) {
+            return "vnd.android.cursor.dir/vnd.kylec.hj.g2048.cp.info";
         }
         return null;
     }

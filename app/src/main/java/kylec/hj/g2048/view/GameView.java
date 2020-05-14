@@ -99,7 +99,6 @@ public class GameView extends GridLayout {
     public String gameStatus = "0";
 
     private GameDatabaseHelper gameDatabaseHelper;
-    private Context mContext;
 
     public GameView(Context context) {
         this(context, null);
@@ -111,9 +110,8 @@ public class GameView extends GridLayout {
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mContext = context;
         initSoundPool();
-        gameDatabaseHelper = new GameDatabaseHelper(mContext, Constant.DB_NAME, null, 1);
+        gameDatabaseHelper = new GameDatabaseHelper(context, Constant.DB_NAME, null, 1);
     }
 
     /**
@@ -268,7 +266,6 @@ public class GameView extends GridLayout {
                 resumeGame(data);
             }
         }else if(gameStatus.equals("0")){
-            reset(); //初始化卡片
             initGame();
         }
 
@@ -481,18 +478,18 @@ public class GameView extends GridLayout {
             for (int k = 0; k < temp; k++) {
                 dataAfterSwipe.add(0);
             }
+            //反转集合顺序
             Collections.reverse(dataAfterSwipe);
-            // 若原始数据和移动后的数据不同，视为界面发生改变
             Collections.reverse(someData);
+            // 若原始数据和移动后的数据不同，视为界面发生改变
             if (!someData.equals(dataAfterSwipe)) {
                 needAddDigital = true;
             }
             someData.clear();
 
             // 重新设置格子数据
-            int index = 0;
             for (int p = 0; p < gridColumnCount; p++) {
-                cells[p][i].setDigital(dataAfterSwipe.get(index++));
+                cells[p][i].setDigital(dataAfterSwipe.get(p));
             }
             // 重置数据
             recordPreviousDigital = -1;
@@ -612,18 +609,18 @@ public class GameView extends GridLayout {
             for (int k = 0; k < temp; k++) {
                 dataAfterSwipe.add(0);
             }
+            //反转集合顺序
             Collections.reverse(dataAfterSwipe);
-            // 若原始数据和移动后的数据不同，视为界面发生改变
             Collections.reverse(someData);
+            // 若原始数据和移动后的数据不同，视为界面发生改变
             if (!someData.equals(dataAfterSwipe)) {
                 needAddDigital = true;
             }
             someData.clear();
 
             // 重新设置格子数据
-            int index = 0;
             for (int p = 0; p < gridColumnCount; p++) {
-                cells[i][p].setDigital(dataAfterSwipe.get(index++));
+                cells[i][p].setDigital(dataAfterSwipe.get(p));
             }
             // 重置数据
             recordPreviousDigital = -1;

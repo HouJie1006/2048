@@ -26,14 +26,14 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
         mGamer = Gamer;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView index;
         TextView name;
         TextView score;
         TextView time;
-        public View chartsView;
+        View chartsView;
 
-        public ViewHolder(@NonNull View v) {
+        ViewHolder(@NonNull View v) {
             super(v);
             chartsView = v;
             index = v.findViewById(R.id.gamer_index);
@@ -86,17 +86,12 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
      * @param position
      */
     public void deleteData(Context context,int position){
-/*        try {
-           Context friendContext = context.createPackageContext("com.hj.datafor2048"
-                    , Context.CONTEXT_IGNORE_SECURITY);*/
             GameDatabaseHelper helper = new GameDatabaseHelper(context, Constant.DB_NAME,null,1);
             SQLiteDatabase db = helper.getWritableDatabase();
             db.delete("info","id=?",new String[]{String.valueOf(mGamer.get(position).getId())});
             db.close();
             mGamer.remove(position);
             notifyDataSetChanged();
-/*        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }*/
+
     }
 }

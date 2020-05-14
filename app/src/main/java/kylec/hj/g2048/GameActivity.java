@@ -53,9 +53,7 @@ public class GameActivity extends AppCompatActivity {
 
     private TextView currentScores;
     private TextView bestScores;
-    private TextView bestScoresRank;
     private TextView titleDescribe;
-    private TextView tvTitle;
     private Button menu;
     private Button reset;
     private Button back;
@@ -121,6 +119,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
         };
+
         gameTime = new Timer();
         gameTime.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -136,7 +135,7 @@ public class GameActivity extends AppCompatActivity {
 
                         Thread.sleep(1000);
                     }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -225,9 +224,9 @@ public class GameActivity extends AppCompatActivity {
 
         currentScores = findViewById(R.id.tv_current_score);
         bestScores = findViewById(R.id.tv_best_score);
-        bestScoresRank = findViewById(R.id.tv_best_score_rank);
+        TextView bestScoresRank = findViewById(R.id.tv_best_score_rank);
         titleDescribe = findViewById(R.id.tv_title_describe);
-        tvTitle = findViewById(R.id.tv_title);
+        TextView tvTitle = findViewById(R.id.tv_title);
         menu = findViewById(R.id.btn_option);
         reset = findViewById(R.id.btn_reset);
         back = findViewById(R.id.btn_back);
@@ -373,6 +372,7 @@ public class GameActivity extends AppCompatActivity {
                 isNeedSave = false;
                 deleteCache(Config.getTableName());
                 saveCurrentScore(0);
+                resetTime(0);
 
                 String result = intent.getStringExtra(GameView.KEY_RESULT);
                 GameOverDialog dialog = new GameOverDialog(GameActivity.this, R.style.CustomDialog);
@@ -384,7 +384,6 @@ public class GameActivity extends AppCompatActivity {
                                 .setOnClickListener(v -> {
                                     isNeedSave = true;
                                     dialog.addInfo(TimeUtils.getFormatHMS(Config.currentSecond));
-                                    resetTime(0);
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
                                     Toast.makeText(GameActivity.this,"添加成功，返回主界面",Toast.LENGTH_SHORT).show();
                                     startActivity(i);
@@ -394,7 +393,6 @@ public class GameActivity extends AppCompatActivity {
                                 .setOnBackClickListener(v -> {
                                     //返回主界面
                                     isNeedSave = true;
-                                    resetTime(0);
                                     Intent i = new Intent(GameActivity.this,LoginActivity.class);
                                     startActivity(i);
                                     dialog.cancel();

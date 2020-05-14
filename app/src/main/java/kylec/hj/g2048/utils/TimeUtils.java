@@ -1,8 +1,12 @@
 package kylec.hj.g2048.utils;
+
+import android.annotation.SuppressLint;
+
 /**
  * 时间格式化工具类
  */
 public class TimeUtils {
+    @SuppressLint("DefaultLocale")
     public static String getFormatHMS(long time){
         time=time/1000;//总秒数
         int s= (int) (time%60);//秒
