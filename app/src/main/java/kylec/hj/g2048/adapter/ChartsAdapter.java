@@ -46,6 +46,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //根据item视图加载ViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.charts_items,parent,false);
         ViewHolder holder = new ViewHolder(view);
         holder.chartsView.setOnClickListener(view1 -> {
@@ -67,6 +68,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //将数据与item视图进行绑定
         Gamer gamer = mGamer.get(position);
         holder.index.setText(String.valueOf(position+1));
         holder.score.setText(String.valueOf(gamer.getScore()));
