@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            //成功绑定时调用 即bindService（）执行成功同时返回非空Ibinder对象
             musicService = ((MusicService.MusicBinder) iBinder).getMusicService();
         }
 

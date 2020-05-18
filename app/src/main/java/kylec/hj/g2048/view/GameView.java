@@ -203,8 +203,7 @@ public class GameView extends GridLayout {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         //  屏幕的宽度-屏幕密度=卡片能放的总宽度
         int cardWidth = metrics.widthPixels - dp2px();
-        int cardHeight = metrics.heightPixels - dp2px();
-        return (Math.min(cardWidth,cardHeight) - 10) / gridColumnCount;
+        return (cardWidth- 10) / gridColumnCount;
     }
 
     /**
